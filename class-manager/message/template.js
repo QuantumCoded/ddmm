@@ -88,3 +88,8 @@ function MessageTemplate(name, options) {
 }
 
 module.exports = MessageTemplate;
+
+// THIS FILE AND METHOD FOR STORING TEMPLATES IS GOING TO BE DEPRICATED
+// Instead templates will be stored as separate files named after their template name in assets/templates
+// Each one of the template files MUST export a function taking client and options and be a javascript file
+// This way packs of user-created assets may be imported following the same standard

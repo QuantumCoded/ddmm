@@ -27,3 +27,8 @@ module.exports = {
     // Delete the guild and all that
   }
 }
+
+// THIS FILE AND METHOD FOR STORING COMMANDS IS GOING TO BE DEPRICATED
+// Instead commands will be stored as separate files named after their command name in assets/commands
+// Each one of the command files MUST export a function taking client and message and be a javascript file
+// This way packs of user-created assets may be imported following the same standard

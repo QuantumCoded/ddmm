@@ -31,6 +31,7 @@ class Channel {
       return;
     }
 
+    // Create the gms guild channel
     client.dms.createChannel(name, options).then(this.initializeChannel.bind(this))
       .catch(console.error);
   }

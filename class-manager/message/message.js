@@ -22,25 +22,25 @@ class Message {
     switch(type) {
       // If the message is a command execute the command
       case 'command':
-        Command(message, client);
+        Command(message, client); // Run the command
         break;
       
       // If the message is a note send a webhook message
       case 'note':
-        let operators = client.settings.getValue('operators');
-        let note_opperator = operators.note;
+        let operators = client.settings.getValue('operators'); // Get the message operators from the client's setings
 
-        message.delete().catch(console.error);
-        new WebhookMessage(message.channel, MessageTemplate('note', {content: message.content.replace(note_opperator, '')}));
+        message.delete().catch(console.error); // Delete the client's message
+
+        // Send a note containing the message's content in the channel
+        new WebhookMessage(message.channel, MessageTemplate('note', {content: message.content.replace(operators.note, '')}));
       break;
       
-      // If the message is an incoming dm message handle opening a dms guild channel
+      // If the message is an incoming dm message handle opening a channel
       case 'incoming':
-        let userMap = client.settings.getValue('user-map');
-        let channelId = userMap[message.author.id];
-        let channel = client.channels.get(channelId);
+        let userMap = client.settings.getValue('user-map'); // Get the user map from the client's settings
+        let channel = client.channels.get(userMap[message.author.id]); // Get the channel for the user
 
-        // If a dms guild channel already exists send a message to it otherwise create it with an initial message
+        // If a channel exists for that user, send a message to it, otherwise create a channel with an initial message
         if (channel) {
           // Send the message to the channel
           new WebhookMessage(channel, message.content, {username: message.author.username, avatarURL: message.author.avatarURL}); // Add support for sending images and files etc too
@@ -52,14 +52,15 @@ class Message {
       
       // If the message is a relayable message in a valid channel
       case 'relayable':
-        let channelMap = client.settings.getValue('channel-map');
-        let userId = channelMap[message.channel.id];
-        let user = client.users.get(userId);
+        let channelMap = client.settings.getValue('channel-map'); // Get the channel map from the client's settings
+        let user = client.users.get(channelMap[message.channel.id]); // Get the user for the channel
 
-        // If the channel map contains a valid user for the channel send that user the message
+        // If the user exists send a message to that user
         if (user) {
-          user.send(message.content); // Add support for sending files and images
+          // NTS: Add support for sending files and images
+          user.send(message.content); // Send a message to the user
         } else {
+          // NTS: This can also be caused by someone removing you as a friend (maybe if the dm channel is closed) without updating the maps
           console.error(`The channel map has an invalid entry for ${message.channel.id}: ${userId}`);
         }
       break;
