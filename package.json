@@ -1,0 +1,12 @@
+{
+  "name": "selfbot",
+  "version": "1.0.0",
+  "description": "This is a bot designed to act as an intermediary between you and your DMs.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "QuantumCoded",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
