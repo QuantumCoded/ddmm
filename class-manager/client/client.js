@@ -3,18 +3,18 @@ const discord = require('discord.js'); // Require discord.js to use its Client c
 class Client extends discord.Client {
   dms; // NTS: Rename dms to guild
   log;
+  general;
   settings;
   ondmsready;
 
   constructor(settings, logger) {
-    logger.debug('Constructing client class');
+    logger.debug('Constructing client');
 
     super(); // Construct the discord.js client
 
     this.settings = settings; // Use a custom property to store the client's settings
     this.log = logger; // Use a custom property to store a handle to the logger
 
-    this.log.debug('Logging the client in');
     this.log.verbose('Logging in');
 
     // Log the client in using the token stored in settings
@@ -27,7 +27,10 @@ class Client extends discord.Client {
     // NTS: Rename dmsGuild
     this.log.debug('Initializing guild');
 
-    this.dms = dmsGuild; // Use a custom property to store the dms guild
+    this.dms = dmsGuild // Use a custom property to store the dms guild
+    this.dms.general = dmsGuild.channels.find(c => c.name == 'general'); // Use a custom property to point to the general channel
+    // NTS: Save this channel later maybe?
+
 
     let readyState = 0; // The state of initializing the guild
 
@@ -45,7 +48,7 @@ class Client extends discord.Client {
       this.log.error('An attempt was made to initialize an invalid guild');
       return;
     }
-    
+
     // Save the id of the dms guild into the settings
     this.settings.setValue('dms-guild-id', this.dms.id);
     this.settings.save();

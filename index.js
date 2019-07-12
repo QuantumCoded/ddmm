@@ -22,9 +22,8 @@ const logger = createLogger({
   level: levels[log_level] || 'info',
   format: combine(
     colorize({ level: true }),
-    label({ label: 'asd' }),
     timestamp(),
-    logFormat
+    printf(({level, message, timestamp}) => `${timestamp} ${level}: ${message}`)
   ),
   transports: [
     new transports.Console()
@@ -86,6 +85,8 @@ client.onmessage = function(message) {
   let channelMap = client.settings.getValue('channel-map'); // Get the channel map out of settings [to be depricated]
   let type;
   
+  if (!client.dms) return;
+
   // Create a flag for important characteristics or each message
   let is_channel_relayable = Boolean(channelMap[message.channel.id] && client.dms.channels.get(message.channel.id)); // Was the message sent in a relayable guild channel
   let is_incoming = Boolean(client.user.id != message.author.id && message.channel.type == 'dm');                    // Was the message sent in a dm channel by another user
