@@ -1,7 +1,7 @@
 const path = require('path'); // Require the path module to reference the settings file path
 const { Settings, Client, DmsGuild, WebhookMessage, Message, MessageTemplate } = require('./class-manager'); // Import the required classes form the class manager
 
-const settings = new Settings(path.join(__dirname, '/config/settings.json')); // Load the client's settings
+const settings = new Settings(path.join(__dirname, '/settings.json')); // Load the client's settings
 const client = new Client(settings); // Create a client from the settings
 
 // When the client is ready
