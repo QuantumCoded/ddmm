@@ -18,37 +18,36 @@ const logFormat = printf(({level, message, timestamp}) => {
   return `${timestamp} ${level}: ${message}`;
 });
 
+const logger = createLogger({
+  level: levels[log_level] || 'info',
+  format: combine(
+    colorize({ level: true }),
+    label({ label: 'asd' }),
+    timestamp(),
+    logFormat
+  ),
+  transports: [
+    new transports.Console()
+  ]
+});
+
 const { Settings, Client, DmsGuild, WebhookMessage, Message, MessageTemplate } = require('./class-manager'); // Destruct the required classes form the class manager
 
 const settings = new Settings(path.join(__dirname, '/settings.json')); // Load the client's settings
-const client = new Client(settings); // Create a client from the settings
+const client = new Client(settings, logger); // Create a client from the settings
 
 // When the client is ready
 client.onready = function() {
-  // Define the client's log property
-  client.log = createLogger({
-    level: levels[log_level] || 'info',
-    format: combine(
-      colorize({ level: true }),
-      label({ label: 'asd' }),
-      timestamp(),
-      logFormat
-    ),
-    transports: [
-      new transports.Console()
-    ]
-  });
-
   client.log.verbose('The client logged in sucessfully');
   client.log.info('The bot is now ready to use');
 
   // NTS: Rename dms-guild-id to guild-id
   let dmsGuildId = client.settings.getValue('dms-guild-id'); // Get the dms guild id out of settings
-  client.log.debug('Got guild id from settings', dmsGuildId);
+  client.log.debug('Got guild id from settings');
 
   // NTS: Rename client.dms to client.guild
-  client.dms = client.guilds.get(dmsGuildId)
-  client.log.debug('Set client\'s guild', Boolean(client.dms));
+  client.dms = client.guilds.get(dmsGuildId);
+  client.log.debug('Attaching guild to the client');
 
   // PREFORM A MAPS CHECK HERE
 
@@ -67,9 +66,9 @@ client.onready = function() {
   // NTS: Rename DmsGuild to Guild
   // If the client does not have a dms guild, make one
   if (!client.dms) {
-    client.log.debug('Creating a new guild');
+    client.log.debug('Failed to find or attach a valid guild to the client');
     new DmsGuild(client);
-  }
+  } else client.log.debug('Guild was successfully attached to the client');
 };
 
 // NTS: Rename .ondmsready to .onguildready

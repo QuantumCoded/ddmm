@@ -1,46 +1,69 @@
 const discord = require('discord.js'); // Require discord.js to use its Client class
 
 class Client extends discord.Client {
-  dms;
+  dms; // NTS: Rename dms to guild
+  log;
   settings;
   ondmsready;
 
-  constructor(settings) {
+  constructor(settings, logger) {
+    logger.debug('Constructing client class');
+
     super(); // Construct the discord.js client
 
     this.settings = settings; // Use a custom property to store the client's settings
+    this.log = logger; // Use a custom property to store a handle to the logger
+
+    this.log.debug('Logging the client in');
+    this.log.verbose('Logging in');
 
     // Log the client in using the token stored in settings
     this.login(settings.getValue('token'))
-      .catch(console.error);
+      .catch(this.log.error);
   }
 
   // Configure a new dms guild to be suitable for use
   initializeDms(dmsGuild) {
-    // NTS: Rename dmsGuild 
+    // NTS: Rename dmsGuild
+    this.log.debug('Initializing guild');
+
+    this.dms = dmsGuild; // Use a custom property to store the dms guild
+
     let readyState = 0; // The state of initializing the guild
 
     // Update the ready state and run the callback when all formatting promises are settled
     let ready = function() {
-      if (++readyState == 3 && this.ondmsready) this.ondmsready();
+      readyState++; // Update the ready state
+      if (readyState == 3 && this.ondmsready) {
+        
+        this.ondmsready();
+      }
     }.bind(this);
     
-    // If an attempt was made to initialize a guild that doesn't exist throw an error
-    if (!dmsGuild) throw 'Error: Attempted to initialize an invalid dms guild';
-
-    this.dms = dmsGuild; // Use a custom property to store the dms guild
+    // If an attempt was made to initialize a guild that doesn't exist log an error
+    if (!dmsGuild) {
+      this.log.error('An attempt was made to initialize an invalid guild');
+      return;
+    }
     
     // Save the id of the dms guild into the settings
     this.settings.setValue('dms-guild-id', this.dms.id);
     this.settings.save();
 
-    // Format the dms guild 
-    this.dms.channels.find(c => c.name == 'General').delete().then(ready)        // Delete the General voice channel
-      .catch(console.error);
-    this.dms.channels.find(c => c.name == 'Voice Channels').delete().then(ready) // Delete the Voice Channels category
-      .catch(console.error);
-    this.dms.channels.find(c => c.name == 'Text Channels').delete().then(ready)  // Delete the Text Channels category
-      .catch(console.error);
+    // Delete the General voice channel
+    this.log.debug('Deleting General voice channel');
+    this.dms.channels.find(c => c.name == 'General').delete().then(ready)
+      .catch(this.log.error);
+
+    // Delete the Voice Channels category
+    this.log.debug('Deleting Voice Channels category');
+    this.dms.channels.find(c => c.name == 'Voice Channels').delete().then(ready)
+      .catch(this.log.error);
+
+    // Delete the Text Channels category
+    this.log.debug('Deleting Text Channels category');
+    this.dms.channels.find(c => c.name == 'Text Channels').delete().then(ready)
+      .catch(this.log.error);
   }
 
   // Add a listener for when the client is ready
