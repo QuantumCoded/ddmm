@@ -13,6 +13,7 @@ if (arguments.includes('-l')) {
   log_level = parseInt(arguments[index + 1]); // Set the level to the one specified
 }
 
+// Create the logger to send output to
 const logger = createLogger({
   level: levels[log_level || 2],
   format: combine(
