@@ -56,11 +56,23 @@ class Message {
         if (channel) {
           // Send the message to the channel
           client.log.debug('Sending a message to the channel');
-          new WebhookMessage(channel, message.content, {username: message.author.username, avatarURL: message.author.avatarURL}); // Add support for sending images and files etc too
+          new WebhookMessage(channel, message.content,
+            {
+              username: message.author.username,
+              avatarURL: message.author.avatarURL,
+              files: Array.from(message.attachments.values())
+            }
+          );
         } else {
           // Create the dms guild channel
           client.log.debug('No channel found, creating a new one with initial message');
-          new Channel(client, message.author.username, {type: 'text', recipient: message.author, initialMessage: MessageTemplate('dm-message', {message: message})});
+          new Channel(client, message.author.username,
+            {
+              type: 'text',
+              recipient: message.author,
+              initialMessage: MessageTemplate('dm-message', {message: message}) // Change this to use options as a message (instead of an object)
+            }
+          );
         }
       break;
       
@@ -77,7 +89,7 @@ class Message {
         if (user) {
           // NTS: Add support for sending files and images
           client.log.debug('Relaying the message to the user');
-          user.send(message.content); // Send a message to the user
+          user.send(message.content, {files: Array.from(message.attachments.values())}); // Send a message to the user
         } else {
           // NTS: This can also be caused by someone removing you as a friend (maybe if the dm channel is closed) without updating the maps
           client.log.error(`The channel map has an invalid entry for ${message.channel.id}: ${userId}`);
