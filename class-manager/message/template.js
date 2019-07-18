@@ -55,7 +55,7 @@ function MessageTemplate(name, options) {
         }
       };
     
-    case 'new-dm-channel': 
+    case 'new-channel': 
       return {
         content: '',
         options: {
@@ -70,12 +70,12 @@ function MessageTemplate(name, options) {
         }
       };
 
-    case 'dm-message':
+    case 'message':
       return {
-        content: options.message.content,
+        content: options.content,
         options: {
-          username: options.message.author.username, // Change to grab nick name here
-          avatarURL: options.message.author.avatarURL
+          username: options.author.username, // NTS: Change to grab nick name here
+          avatarURL: options.author.avatarURL
         }
       };
     

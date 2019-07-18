@@ -14,25 +14,6 @@ class Channel {
     this.recipient = options.recipient;
     this.initialMessage = options.initialMessage;
 
-    // Build the channel from an already existing channel (to be depricated?)
-/*     if (typeof name == 'object' && !options) {
-      let channel = name;
-      let channelMap = client.settings.getValue('channel-map'); // Get the channel map
-      let userId = channelMap[channel.id];
-
-      // If the channel map has a user mapped to the channel then set the recipient, otherwise fail to identify recipient
-      if (userId) {
-        this.recipient = client.users.get(userId);
-
-        if (!this.recipient) {
-          console.error(`The channel map is wrong, no existing user for ${channel.id}: ${userId}`);
-        }
-      } else {
-        console.error(`Failed to identify recipient, channel map has ${channel.id}: ${userId}`);
-      }
-      return;
-    } */
-
     // Create the gms guild channel
     client.log.verbose(`Creating a channel for user ${name}`);
     client.dms.createChannel(name, options).then(this.initializeChannel.bind(this))
@@ -42,7 +23,7 @@ class Channel {
   initializeChannel(channel) {
     this.client.log.debug('Initializing channel');
     this.client.log.debug('Sending channel info message');
-    new WebhookMessage(channel, MessageTemplate('new-dm-channel', {user: this.recipient})); // Send an info message about who the recipient is
+    new WebhookMessage(channel, MessageTemplate('new-channel', this.recipient)); // Send an info message about who the recipient is
 
     // NTS: Change this to use assets
     // Update the map settings

@@ -1,6 +1,6 @@
 const path = require('path'); // Require the path module to reference the settings file path
 const { createLogger, format, transports } = require('winston'); // Destruct the required methods from winston
-const { combine, timestamp, label, printf, colorize } = format;  // Destruct the required methods from format
+const { combine, timestamp, printf, colorize } = format; // Destruct the required methods from format
 
 const levels = ['error', 'warn', 'info', 'verbose', 'debug', 'silly']; // Define the log levels
 const arguments =  process.argv.slice(2); // Get arguments used when starting the script
@@ -26,7 +26,7 @@ const logger = createLogger({
   ]
 });
 
-const { Settings, Client, DmsGuild, WebhookMessage, Message, MessageTemplate } = require('./class-manager'); // Destruct the required classes form the class manager
+const { Settings, Client, Guild, WebhookMessage, Message, MessageTemplate } = require('./class-manager'); // Destruct the required classes form the class manager
 
 const settings = new Settings(path.join(__dirname, '/settings.json')); // Load the client's settings
 const client = new Client(settings, logger); // Create a client from the settings
@@ -36,12 +36,11 @@ client.onready = function() {
   client.log.verbose('The client logged in sucessfully');
   client.log.info('The bot is now ready to use');
 
-  // NTS: Rename dms-guild-id to guild-id
-  let dmsGuildId = client.settings.getValue('dms-guild-id'); // Get the dms guild id out of settings
+  // Get the dms guild id out of settings
+  let guildId = client.settings.getValue('guild-id');
   client.log.debug('Got guild id from settings');
 
-  // NTS: Rename client.dms to client.guild
-  client.dms = client.guilds.get(dmsGuildId);
+  client.guild = client.guilds.get(guildId);
   client.log.debug('Attaching guild to the client');
 
   // PREFORM A MAPS CHECK HERE
@@ -58,21 +57,20 @@ client.onready = function() {
     * Use .setProperty(userId, name, value) and .getProperty(userId, name) to get user properties
   */
 
-  // NTS: Rename DmsGuild to Guild
   // If the client does not have a dms guild, make one
-  if (!client.dms) {
+  if (!client.guild) {
     client.log.debug('Failed to find or attach a valid guild to the client');
-    new DmsGuild(client);
+    new Guild(client);
   } else client.log.debug('Guild was successfully attached to the client');
 };
 
 // NTS: Rename .ondmsready to .onguildready
 // When the client's dms are initialized
-client.ondmsready = function() {
+client.onguildready = function() {
   // Send a message welcoming the client
   client.log.verbose('The client\'s guild has been initialized');
   client.log.debug('Sending a welcome message to the client');
-  new WebhookMessage(client.dms.general, MessageTemplate('welcome', {name: client.user.username, operators: client.settings.getValue('operators')}));
+  new WebhookMessage(client.guild.general, MessageTemplate('welcome', {name: client.user.username, operators: client.settings.getValue('operators')}));
 };
 
 // When the client sends or receives a message
@@ -81,15 +79,15 @@ client.onmessage = function(message) {
   let channelMap = client.settings.getValue('channel-map'); // Get the channel map out of settings [to be depricated]
   let type;
   
-  if (!client.dms) return;
+  if (!client.guild) return;
 
   // Create a flag for important characteristics or each message
-  let is_channel_relayable = Boolean(channelMap[message.channel.id] && client.dms.channels.get(message.channel.id)); // Was the message sent in a relayable guild channel
-  let is_incoming = Boolean(client.user.id != message.author.id && message.channel.type == 'dm');                    // Was the message sent in a dm channel by another user
-  let is_internal = Boolean(message.channel.type != 'dm' && message.guild.id == client.dms.id);                      // Was the message sent in the server
-  let is_command = Boolean(is_internal && message.content.startsWith(operators.command));                            // Was the message internal and using the command operator
-  let is_note = Boolean(is_internal && message.content.startsWith(operators.note));                                  // Was the message internal and using the note operator
-  let is_relayable = Boolean((!message.author.bot && is_channel_relayable && !(is_command || is_note)));             // Was the message in a relayabe channel and a valid relayable message
+  let is_channel_relayable = Boolean(channelMap[message.channel.id] && client.guild.channels.get(message.channel.id)); // Was the message sent in a relayable guild channel
+  let is_incoming = Boolean(client.user.id != message.author.id && message.channel.type == 'dm');                      // Was the message sent in a dm channel by another user
+  let is_internal = Boolean(message.channel.type != 'dm' && message.guild.id == client.guild.id);                      // Was the message sent in the server
+  let is_command = Boolean(is_internal && message.content.startsWith(operators.command));                              // Was the message internal and using the command operator
+  let is_note = Boolean(is_internal && message.content.startsWith(operators.note));                                    // Was the message internal and using the note operator
+  let is_relayable = Boolean((!message.author.bot && is_channel_relayable && !(is_command || is_note)));               // Was the message in a relayabe channel and a valid relayable message
 
   // A code that represents the state of all the conditions above
   let debug_type_code = (is_channel_relayable << 5) +

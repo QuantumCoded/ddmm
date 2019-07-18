@@ -70,7 +70,7 @@ class Message {
             {
               type: 'text',
               recipient: message.author,
-              initialMessage: MessageTemplate('dm-message', {message: message}) // Change this to use options as a message (instead of an object)
+              initialMessage: MessageTemplate('message', message)
             }
           );
         }
@@ -87,7 +87,6 @@ class Message {
 
         // If the user exists send a message to that user
         if (user) {
-          // NTS: Add support for sending files and images
           client.log.debug('Relaying the message to the user');
           user.send(message.content, {files: Array.from(message.attachments.values()).map(a => a.url)}); // Send a message to the user
         } else {
