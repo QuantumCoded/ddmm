@@ -14,3 +14,7 @@ July 14 2019 6:05 PM MDT Version 1.0.2
   Fixed logs not showing without a level flag
   Adding logs to channel.js
   Adding logs to message.js
+
+July 18 2019 2:31 PM MDT Version 1.0.3
+  Removing empty line at the end of package.json
+  Adding image support
