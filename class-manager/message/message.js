@@ -60,7 +60,7 @@ class Message {
             {
               username: message.author.username,
               avatarURL: message.author.avatarURL,
-              files: Array.from(message.attachments.values())
+              files: Array.from(message.attachments.values()).map(a => a.url)
             }
           );
         } else {
@@ -89,7 +89,7 @@ class Message {
         if (user) {
           // NTS: Add support for sending files and images
           client.log.debug('Relaying the message to the user');
-          user.send(message.content, {files: Array.from(message.attachments.values())}); // Send a message to the user
+          user.send(message.content, {files: Array.from(message.attachments.values()).map(a => a.url)}); // Send a message to the user
         } else {
           // NTS: This can also be caused by someone removing you as a friend (maybe if the dm channel is closed) without updating the maps
           client.log.error(`The channel map has an invalid entry for ${message.channel.id}: ${userId}`);
