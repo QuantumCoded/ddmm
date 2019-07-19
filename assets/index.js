@@ -25,8 +25,6 @@ module.exports.runCommand = function(name, message, client) {
 // Generate a template with its name and options
 module.exports.getTemplate = function(name, options) {
   // If the template exists create it otherwise return without success
-  if (templates.has(name)) {
-    templates.get(name)(options);
-    return true;
-  } else return;
+  if (templates.has(name)) return templates.get(name)(options);
+  else return;
 };
