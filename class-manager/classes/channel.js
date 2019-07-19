@@ -16,7 +16,7 @@ class Channel {
 
     // Create the gms guild channel
     client.log.verbose(`Creating a channel for user ${name}`);
-    client.dms.createChannel(name, options).then(this.initializeChannel.bind(this))
+    client.guild.createChannel(name, options).then(this.initializeChannel.bind(this))
       .catch(console.error);
   }
 
