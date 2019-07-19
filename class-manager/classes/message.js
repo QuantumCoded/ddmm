@@ -1,7 +1,6 @@
 const Channel = require('./channel');
-const Command = require('./command');
-const MessageTemplate = require('./template');
 const WebhookMessage = require('./webhook-message');
+const Assets = require('../../assets');
 
 class Message {
   type;
@@ -25,29 +24,34 @@ class Message {
     switch(type) {
       // If the message is a command execute the command
       case 'command':
-        client.log.debug(`Running command from message ${message.content}`);
-        Command(message, client); // Run the command
+        client.log.debug(`Parsing command from message ${message.content}`);
+        let command = message.content.split(' ').shift(); // Get the first block of the string
+        let command_operator = client.settings.getValue('operators').command; // Get the command operator
+        let name = command.replace(command_operator, ''); // Remove the command operator from the string
+
+        client.log.debug(`Running command ${name}`);
+        Assets.runCommand(name, message, client) // Run the command
         break;
       
       // If the message is a note send a webhook message
       case 'note':
         client.log.debug(`Creating a note from message ${message.content}`);
         client.log.debug(`Getting operators from settings`);
-        let operators = client.settings.getValue('operators'); // Get the message operators from the client's setings
+        let note_operator = client.settings.getValue('operators').note; // Get the note operator from the client's setings
 
         client.log.debug(`Deleting the client's original message`);
-        message.delete().catch(console.error); // Delete the client's message
+        message.delete().catch(client.log.error); // Delete the client's message
 
         // Send a note containing the message's content in the channel
-        client.log.debug(`Sending the client's not message`);
-        new WebhookMessage(message.channel, MessageTemplate('note', {content: message.content.replace(operators.note, '')}));
+        client.log.debug(`Sending the client's note message`);
+        new WebhookMessage(message.channel, Assets.getTemplate('note', message.content.replace(note_operator, '')));
       break;
       
       // If the message is an incoming dm message handle opening a channel
       case 'incoming':
-        // NTS: Change this to use assets
+      // NTS: Change this to use users
 
-        client.log.debug('Getting user map from settings');
+      client.log.debug('Getting user map from settings');
         client.log.debug('Getting the channel for the user from the user map');
         let userMap = client.settings.getValue('user-map'); // Get the user map from the client's settings
         let channel = client.channels.get(userMap[message.author.id]); // Get the channel for the user
@@ -56,13 +60,7 @@ class Message {
         if (channel) {
           // Send the message to the channel
           client.log.debug('Sending a message to the channel');
-          new WebhookMessage(channel, message.content,
-            {
-              username: message.author.username,
-              avatarURL: message.author.avatarURL,
-              files: Array.from(message.attachments.values()).map(a => a.url)
-            }
-          );
+          new WebhookMessage(channel, Assets.getTemplate('message', message));
         } else {
           // Create the dms guild channel
           client.log.debug('No channel found, creating a new one with initial message');
@@ -70,7 +68,7 @@ class Message {
             {
               type: 'text',
               recipient: message.author,
-              initialMessage: MessageTemplate('message', message)
+              initialMessage: Assets.getTemplate('message', message)
             }
           );
         }
@@ -78,7 +76,7 @@ class Message {
       
       // If the message is a relayable message in a valid channel
       case 'relayable':
-        //NTS: Change this to use assets
+        //NTS: Change this to use users
 
         client.log.debug('Getting channel map from settings');
         client.log.debug('Getting the user for the channel from the channel map');
