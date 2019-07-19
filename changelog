@@ -33,3 +33,7 @@ July 19 2019 1:11 AM MDT Version 1.1.0
   Fixing bug not returning message template in index
   Adding support for using assets in message class
   Removing old command and template systems
+
+July 19 2019 9:29 AM MDT Version 1.1.1
+  Fixing bug where channel wasn't using assets
+  Removing unused classes from class manager
