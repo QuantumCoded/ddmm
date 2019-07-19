@@ -1,0 +1,11 @@
+{
+  "token": "your discord token",
+  "dms-guild-id": "",
+  operators: {
+    command: "the character(s) to start a command with",
+    note: "the character(s) to start a note with"
+  },
+  "channel-map": {},
+  "user-map": {}
+}
+# Replace the text right of a colon with actual data, delete this line, and save this file as settings.json in order for the bot to run

@@ -1,0 +1,35 @@
+July 11 2019 1:05 AM MDT Version 1.0.1
+  Created change log
+  Tidying up code
+  Adding comments
+
+July 14 2019 6:05 PM MDT Version 1.0.2
+  Updating settings path in index.js
+  Removing node_modules from .gitignore
+  Installing winston
+  Adding testing to .gitignore
+  Adding logs to index.js
+  Adding logs to client.js
+  Adding logs to dms.js
+  Fixed logs not showing without a level flag
+  Adding logs to channel.js
+  Adding logs to message.js
+
+July 18 2019 2:31 PM MDT Version 1.0.3
+  Removing empty line at the end of package.json
+  Adding image support
+
+July 19 2019 1:11 AM MDT Version 1.1.0
+  Renamed dms to guild
+  Restructuring class manager
+  Formatting assets
+  Fixing bug where group dms are treated as internal
+  Replacing dms with guild in classes/channel.js
+  Creating assets manager
+  Creating help command
+  Fixing bug not destructing WebhookMessage in help
+  Creating eval command
+  Creating templates
+  Fixing bug not returning message template in index
+  Adding support for using assets in message class
+  Removing old command and template systems
