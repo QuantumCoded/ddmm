@@ -1,5 +1,5 @@
 const WebhookMessage = require('./webhook-message');
-const MessageTemplate = require('./template');
+const Assets = require('../../assets');
 
 class Channel {
   client;
@@ -23,7 +23,7 @@ class Channel {
   initializeChannel(channel) {
     this.client.log.debug('Initializing channel');
     this.client.log.debug('Sending channel info message');
-    new WebhookMessage(channel, MessageTemplate('new-channel', this.recipient)); // Send an info message about who the recipient is
+    new WebhookMessage(channel, Assets.getTemplate('new-channel', this.recipient)); // Send an info message about who the recipient is
 
     // NTS: Change this to use assets
     // Update the map settings
