@@ -84,7 +84,7 @@ client.onmessage = function(message) {
   // Create a flag for important characteristics or each message
   let is_channel_relayable = Boolean(channelMap[message.channel.id] && client.guild.channels.get(message.channel.id)); // Was the message sent in a relayable guild channel
   let is_incoming = Boolean(client.user.id != message.author.id && message.channel.type == 'dm');                      // Was the message sent in a dm channel by another user
-  let is_internal = Boolean(message.channel.type != 'dm' && message.guild.id == client.guild.id);                      // Was the message sent in the server
+  let is_internal = Boolean(message.channel.type == 'text' && message.guild.id == client.guild.id);                    // Was the message sent in the server
   let is_command = Boolean(is_internal && message.content.startsWith(operators.command));                              // Was the message internal and using the command operator
   let is_note = Boolean(is_internal && message.content.startsWith(operators.note));                                    // Was the message internal and using the note operator
   let is_relayable = Boolean((!message.author.bot && is_channel_relayable && !(is_command || is_note)));               // Was the message in a relayabe channel and a valid relayable message
