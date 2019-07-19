@@ -13,7 +13,8 @@ function MessageTemplate(name, options) {
           }]
         }
       };
-
+ 
+    // Change name to help in assets
     case 'setup':
       return {
         content: '',
@@ -27,6 +28,7 @@ function MessageTemplate(name, options) {
         }
       };
 
+    // Change name to evaluation in assets
     case 'eval':
       return {
         content: '',

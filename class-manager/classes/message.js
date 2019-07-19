@@ -1,7 +1,7 @@
-const Channel = require('../channel/channel');
-const Command = require('../command/command');
-const MessageTemplate = require('../message/template');
-const WebhookMessage = require('../webhook/message');
+const Channel = require('./channel');
+const Command = require('./command');
+const MessageTemplate = require('./template');
+const WebhookMessage = require('./webhook-message');
 
 class Message {
   type;
