@@ -36,8 +36,7 @@ class Client extends discord.Client {
     let ready = function() {
       readyState++; // Update the ready state
       if (readyState == 3 && this.onguildready) {
-        
-        this.ondmsready();
+        this.onguildready();
       }
     }.bind(this);
     

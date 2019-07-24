@@ -5,7 +5,7 @@ const { combine, timestamp, printf, colorize } = format; // Destruct the require
 const levels = ['error', 'warn', 'info', 'verbose', 'debug', 'silly']; // Define the log levels
 const arguments =  process.argv.slice(2); // Get arguments used when starting the script
 
-let log_level = 0; // The level of logs to display
+let log_level; // The level of logs to display
 
 // If there is a -L parameter change the log level
 if (arguments.includes('-l')) {
@@ -64,7 +64,6 @@ client.onready = function() {
   } else client.log.debug('Guild was successfully attached to the client');
 };
 
-// NTS: Rename .ondmsready to .onguildready
 // When the client's dms are initialized
 client.onguildready = function() {
   // Send a message welcoming the client
