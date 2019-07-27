@@ -55,3 +55,6 @@ module.exports.createUser = function(id, object) {
   fs.writeFileSync(user_path, JSON.stringify(object || {}));
   profiles.set(id, new Profile(file_name));
 };
+
+// Check if a user exists in the profiles map
+module.exports.userExists = (id) => profiles.has(id);
