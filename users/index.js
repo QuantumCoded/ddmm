@@ -50,6 +50,8 @@ module.exports.getChannelRecipient = function(id) {
 
 // Create a new user with an id and settings
 module.exports.createUser = function(id, object) {
-  let user_path = path.join(profiles_path, id + '.json');
-  fs.writeFileSync(user_path, JSON.stringify(object));
+  let file_name = id + '.json';
+  let user_path = path.join(profiles_path, file_name);
+  fs.writeFileSync(user_path, JSON.stringify(object || {}));
+  profiles.set(id, new Profile(file_name));
 };
