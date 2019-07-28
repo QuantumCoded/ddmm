@@ -1,5 +1,6 @@
 const WebhookMessage = require('./webhook-message');
 const Assets = require('../../assets');
+const Users = require('../../users');
 
 class Channel {
   client;
@@ -25,23 +26,15 @@ class Channel {
     this.client.log.debug('Sending channel info message');
     new WebhookMessage(channel, Assets.getTemplate('new-channel', this.recipient)); // Send an info message about who the recipient is
 
-    // NTS: Change this to use assets
-    // Update the map settings
-    this.client.log.debug('Loading channel map and user map from settings');
-    let channelMap = this.client.settings.getValue('channel-map'); // Get the channel map
-    let userMap = this.client.settings.getValue('user-map'); // Get the user map
+    let user = Users.getUser(this.recipient.id);
 
-    // NTS: Change this to use assets
-    // Create the channel binding
-    this.client.log.debug('Adding the channel binding to maps');
-    channelMap[channel.id] = this.recipient.id; // Update the channel map
-    userMap[this.recipient.id] = channel.id; // Update the user map
-
-    // NTS: Change this to use assets
-    this.client.log.debug('Writing maps to settings');
-    this.client.settings.setValue('channel-map', channelMap); // Set the channel map
-    this.client.settings.setValue('user-map', userMap); // Set the user map
-    this.client.settings.save(); // Save the client settings
+    if (!user) {
+      Users.createUser(this.recipient.id, {
+        name: this.recipient.username,
+        id: this.recipient.id,
+        channel: channel.id
+      });
+    }
 
     // If the channel was created with an initial message then send it
     if (this.initialMessage) {
