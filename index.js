@@ -1,48 +1,23 @@
 const path = require('path'); // Require the path module to reference the settings file path
-const { createLogger, format, transports } = require('winston'); // Destruct the required methods from winston
-const { combine, timestamp, printf, colorize } = format; // Destruct the required methods from format
 const Users = require('./users');
-
-const levels = ['error', 'warn', 'info', 'verbose', 'debug', 'silly']; // Define the log levels
-const arguments =  process.argv.slice(2); // Get arguments used when starting the script
-
-let log_level; // The level of logs to display
-
-// If there is a -L parameter change the log level
-if (arguments.includes('-l')) {
-  let index = arguments.indexOf('-l'); // Get the index of the -l operator
-  log_level = parseInt(arguments[index + 1]); // Set the level to the one specified
-}
-
-// Create the logger to send output to
-const logger = createLogger({
-  level: levels[log_level || 2],
-  format: combine(
-    colorize({ level: true }),
-    timestamp(),
-    printf(({level, message, timestamp}) => `${timestamp} ${level}: ${message}`)
-  ),
-  transports: [
-    new transports.Console()
-  ]
-});
+const logger = require('./logger');
 
 const { Settings, Client, Guild, WebhookMessage, Message, MessageTemplate } = require('./class-manager'); // Destruct the required classes form the class manager
 
 const settings = new Settings(path.join(__dirname, '/settings.json')); // Load the client's settings
-const client = new Client(settings, logger); // Create a client from the settings
+const client = new Client(settings); // Create a client from the settings
 
 // When the client is ready
 client.onready = function() {
-  client.log.verbose('The client logged in sucessfully');
-  client.log.info('The bot is now ready to use');
+  logger.verbose('The client logged in sucessfully');
+  logger.info('The bot is now ready to use');
 
   // Get the dms guild id out of settings
   let guildId = client.settings.getValue('guild-id');
-  client.log.debug('Got guild id from settings');
+  logger.debug('Got guild id from settings');
 
   client.guild = client.guilds.get(guildId);
-  client.log.debug('Attaching guild to the client');
+  logger.debug('Attaching guild to the client');
 
   // PREFORM A MAPS CHECK HERE
 
@@ -60,16 +35,16 @@ client.onready = function() {
 
   // If the client does not have a dms guild, make one
   if (!client.guild) {
-    client.log.debug('Failed to find or attach a valid guild to the client');
+    logger.debug('Failed to find or attach a valid guild to the client');
     new Guild(client);
-  } else client.log.debug('Guild was successfully attached to the client');
+  } else logger.debug('Guild was successfully attached to the client');
 };
 
 // When the client's dms are initialized
 client.onguildready = function() {
   // Send a message welcoming the client
-  client.log.verbose('The client\'s guild has been initialized');
-  client.log.debug('Sending a welcome message to the client');
+  logger.verbose('The client\'s guild has been initialized');
+  logger.debug('Sending a welcome message to the client');
   new WebhookMessage(client.guild.general, MessageTemplate('welcome', {name: client.user.username, operators: client.settings.getValue('operators')}));
 };
 
@@ -103,7 +78,7 @@ client.onmessage = function(message) {
                         (is_note              << 1) +
                         (is_relayable         << 0);
 
-  client.log.silly(`Recieved a message with type code ${debug_type_code}`);
+  logger.silly(`Recieved a message with type code ${debug_type_code}`);
 
   // Type the message
   if (is_incoming) type = 'incoming';   // If the message was sent by another user in a dms channel then it's an incomming message
@@ -113,7 +88,7 @@ client.onmessage = function(message) {
 
   // If the message is of a valid type then construct it
   if (type) {
-    client.log.debug(`Processing a message of type ${type} (${debug_type_code})`);
+    logger.debug(`Processing a message of type ${type} (${debug_type_code})`);
     new Message(type, message, client);
   }
 };

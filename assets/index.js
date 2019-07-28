@@ -1,5 +1,6 @@
 const fs = require('fs'); // Require the fs module to access files on the computer
 const path = require('path'); // Require the path module to get locations of files
+const logger = require('../logger');
 
 const commands_path = path.join(__dirname, 'commands');   // ./commands
 const templates_path = path.join(__dirname, 'templates'); // ./templates
@@ -16,15 +17,13 @@ const templates = new Map(templates_iterable); // A map of Template<name, functi
 // Run a command with its name and a message
 module.exports.runCommand = function(name, message, client) {
   // If the command exists run it otherwise return without success
-  if (commands.has(name)) {
-    commands.get(name)(message, client);
-    return true;
-  } else return;
+  if (commands.has(name)) commands.get(name)(message, client);
+  else logger.warn(`Unknown command ${name}`);
 };
 
 // Generate a template with its name and options
 module.exports.getTemplate = function(name, options) {
   // If the template exists create it otherwise return without success
   if (templates.has(name)) return templates.get(name)(options);
-  else return;
+  else logger.error(`Unknown template ${name}`);
 };
