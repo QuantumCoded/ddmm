@@ -1,6 +1,7 @@
 const path = require('path'); // Require the path module to reference the settings file path
 const { createLogger, format, transports } = require('winston'); // Destruct the required methods from winston
 const { combine, timestamp, printf, colorize } = format; // Destruct the required methods from format
+const Users = require('./users');
 
 const levels = ['error', 'warn', 'info', 'verbose', 'debug', 'silly']; // Define the log levels
 const arguments =  process.argv.slice(2); // Get arguments used when starting the script
@@ -76,9 +77,15 @@ client.onguildready = function() {
 client.onmessage = function(message) {
   let operators = client.settings.getValue('operators'); // Get the operators map out of settings
   let channelMap = client.settings.getValue('channel-map'); // Get the channel map out of settings [to be depricated]
+  let recipient = Users.getChannelRecipient(message.channel.id);
+
   let type;
   
   if (!client.guild) return;
+
+  // NTS: Change .get to .has
+  // NTS: const startsWithOperator = Object.values(operators).some((operator) => msg.channel.startsWith(operator));
+  // NTS: Change this to use camel case
 
   // Create a flag for important characteristics or each message
   let is_channel_relayable = Boolean(channelMap[message.channel.id] && client.guild.channels.get(message.channel.id)); // Was the message sent in a relayable guild channel
@@ -86,7 +93,7 @@ client.onmessage = function(message) {
   let is_internal = Boolean(message.channel.type == 'text' && message.guild.id == client.guild.id);                    // Was the message sent in the server
   let is_command = Boolean(is_internal && message.content.startsWith(operators.command));                              // Was the message internal and using the command operator
   let is_note = Boolean(is_internal && message.content.startsWith(operators.note));                                    // Was the message internal and using the note operator
-  let is_relayable = Boolean((!message.author.bot && is_channel_relayable && !(is_command || is_note)));               // Was the message in a relayabe channel and a valid relayable message
+  let is_relayable = Boolean((!message.author.bot && recipient && !(is_command || is_note)));                          // Was the message in a relayabe channel and a valid relayable message
 
   // A code that represents the state of all the conditions above
   let debug_type_code = (is_channel_relayable << 5) +
