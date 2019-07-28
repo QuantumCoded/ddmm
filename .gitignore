@@ -2,3 +2,4 @@ settings.json
 .vscode
 testing
 users/profiles/*
+node_modules
