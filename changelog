@@ -37,3 +37,15 @@ July 19 2019 1:11 AM MDT Version 1.1.0
 July 19 2019 9:29 AM MDT Version 1.1.1
   Fixing bug where channel wasn't using assets
   Removing unused classes from class manager
+
+July 27 2019 7:10 PM MDT Version 1.1.2
+  Minor tweaks
+  Creating the users module
+  Fixing bug with not adding new users to the map
+  Adding profiles to gitignore
+  Adding userExists to users module
+  Implementing user creation into channel
+  Implementing users into message class
+  Implementing users into index
+  Adding support for getting names from profile
+  Adding support for users without pictures
