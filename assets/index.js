@@ -1,6 +1,6 @@
 const fs = require('fs'); // Require the fs module to access files on the computer
 const path = require('path'); // Require the path module to get locations of files
-const logger = require('../logger');
+const logger = require('../utility/logger');
 
 const commands_path = path.join(__dirname, 'commands');   // ./commands
 const templates_path = path.join(__dirname, 'templates'); // ./templates

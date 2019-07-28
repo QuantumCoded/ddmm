@@ -1,5 +1,5 @@
 const discord = require('discord.js'); // Require discord.js to use its Client class
-const logger = require('../../logger'); // Require logger to send logs to the console
+const logger = require('../../utility/logger'); // Require logger to send logs to the console
 
 class Client extends discord.Client {
   guild;

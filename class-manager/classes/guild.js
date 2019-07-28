@@ -1,4 +1,4 @@
-const logger = require('../../logger');
+const logger = require('../../utility/logger');
 
 class DmsGuild {
   general;

@@ -1,7 +1,7 @@
 const WebhookMessage = require('./webhook-message');
 const Assets = require('../../assets');
 const Users = require('../../users');
-const logger = require('../../logger');
+const logger = require('../../utility/logger');
 
 class Channel {
   client;
