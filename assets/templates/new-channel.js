@@ -7,7 +7,7 @@ module.exports = function(user) {
         title: `**Opened a DM channel with ${user.username}**`,
         description: 'Some information about the user',
         thumbnail: {
-          url: user.avatarURL
+          url: user.avatarURL || user.defaultAvatarURL
         }
       }]
     }

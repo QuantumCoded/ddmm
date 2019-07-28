@@ -11,7 +11,7 @@ module.exports = function(message) {
     content: message.content,
     options: {
       username: name,
-      avatarURL: message.author.avatarURL
+      avatarURL: message.author.avatarURL || message.author.defaultAvatarURL
     }
   };
 };
