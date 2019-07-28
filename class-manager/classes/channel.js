@@ -23,8 +23,8 @@ class Channel {
   }
 
   initializeChannel(channel) {
-    this.logger.debug('Initializing channel');
-    this.logger.debug('Sending channel info message');
+    logger.debug('Initializing channel');
+    logger.debug('Sending channel info message');
     new WebhookMessage(channel, Assets.getTemplate('new-channel', this.recipient)); // Send an info message about who the recipient is
 
     let user = Users.getUser(this.recipient.id);
@@ -39,8 +39,8 @@ class Channel {
 
     // If the channel was created with an initial message then send it
     if (this.initialMessage) {
-      this.logger.debug('The channel was constructed with an initial message');
-      this.logger.debug('Sending initial message');
+      logger.debug('The channel was constructed with an initial message');
+      logger.debug('Sending initial message');
       new WebhookMessage(channel, this.initialMessage);
     }
   }

@@ -43,7 +43,7 @@ class Message {
         logger.debug('Checking if the user exists');
         // If the user exists then send them a message otherwise create a channel
         if (Users.userExists(message.author.id)) {
-          logger.log('Getting channel from the user\'s profile');
+          logger.debug('Getting channel from the user\'s profile');
           user = Users.getUser(message.author.id); // Get the user
           let channel = client.channels.get(user.getProperty('channel')); // Get the user's channel
 
