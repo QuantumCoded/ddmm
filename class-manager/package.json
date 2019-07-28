@@ -1,9 +1,0 @@
-{
-  "name": "class-manager",
-  "version": "1.0.0",
-  "description": "The best method I could come up with to manage all of my classes.",
-  "main": "index.js",
-  "scripts": {},
-  "author": "QuantumCoded",
-  "license": "MIT"
-}
