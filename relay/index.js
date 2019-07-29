@@ -42,6 +42,10 @@ const initializeLink = function(pair) {
     logger.debug(`Created relay for ${dmsChannel.recipient.username}`);
   } else {
     logger.warn(`Invalid link {${userId}:${channelId}} removing entry`);
+
+    userRelays.delete(userId);
+    channelRelays.delete(channelId);
+
     delete links[userId];
     fs.writeFileSync(linksPath, JSON.stringify(links));
   }
