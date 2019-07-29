@@ -77,6 +77,15 @@ module.exports = function(message) {
       if (relay.userRelays.has(message.author.id)) {
         let user = relay.userRelays.get(message.author.id); // Get the relay for the user
 
+        // Validate the map integrity
+        if (!client.channels.has(user.channel.id) || !client.channels.has(user.dms.id)) {
+          // NTS: Add the ability to disable the auto reconstruct
+
+          relay.initialize();
+          relay.createRelay(message.author, message);
+          return;
+        }
+
         logger.debug('Sending a message to the channel');
         new WebhookMessage(user.channel, assets.getTemplate('message', message)); // Send a message to the user's channel
       } else {
