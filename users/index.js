@@ -1,5 +1,6 @@
 const fs = require('fs'); // Require fs to access files on the local machine
 const path = require('path'); // Require the path module to reference the profiles path
+const logger = require('../utility/logger');
 
 // The class of a user's profile
 class Profile {
@@ -7,7 +8,7 @@ class Profile {
   object;
 
   constructor(name) {
-    this.path = path.join(profiles_path, name); // Save the user's file path
+    this.path = path.join(profilesPath, name); // Save the user's file path
     this.object = JSON.parse(fs.readFileSync(this.path, 'utf8')); // Parse the user object
   }
 
@@ -29,12 +30,43 @@ class Profile {
   }
 }
 
-const profiles_path = path.join(__dirname, 'profiles'); // ./profiles
-const profile_files = fs.readdirSync(profiles_path); // An array of all the files in the profiles folder
-const profiles_iterable = profile_files.map(name => [name.replace('.json',''), new Profile(name)]); // Create the iterator for the profiles
+const profilesPath = path.join(__dirname, 'profiles'); // ./profiles
+const users = fs.readdirSync(profilesPath);
 
-const profiles = new Map(profiles_iterable); // A map of Profiles<id, profile>
+const profiles = new Map(); // Map<id, profile>
 
+// Validate and create a profile from a user file
+const initializeUser = function(name) {
+  const client = require('../index');
+
+  let id = name.replace('.json',''); // The user's id
+
+  // Validate the user
+  if (client.users.has(id)) {
+    profiles.set(id, new Profile(name)); // Add the profile to the map
+    logger.debug(`Loaded profile for ${client.users.get(id).username}`);
+  } else {
+    logger.warn(`Invalid profile ${name} removing file`);
+    fs.unlinkSync(path.join(profilesPath, name)); // Delete profile if it's invalid
+  }
+};
+
+module.exports.initialize = function() {
+  logger.debug('Initializing user profiles...');
+  users.forEach(initializeUser);
+  logger.debug('Finished!');
+};
+
+module.exports.createProfile = function(id, object) {
+  let fileName = id + '.json'
+  let filePath = path.join(profilesPath, fileName);
+  fs.writeFileSync(filePath, JSON.stringify(object));
+  initializeUser(fileName);
+};
+
+module.exports.profiles = profiles;
+
+/* 
 // Get a user from their id
 module.exports.getUser = function(id) {
   if (profiles.has(id)) {
@@ -57,4 +89,4 @@ module.exports.createUser = function(id, object) {
 };
 
 // Check if a user exists in the profiles map
-module.exports.userExists = (id) => profiles.has(id);
+module.exports.userExists = (id) => profiles.has(id); */
