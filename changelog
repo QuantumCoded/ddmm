@@ -66,3 +66,6 @@ July 28 2019 7:40 PM MDT Version 1.2.0
   Abstracting client events to events handler
   Removing class-manager
   Fixing commands and templates
+
+July 28 2019 8:50 PM MDT Version 1.2.1
+  Adding links to gitignore

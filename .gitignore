@@ -3,3 +3,4 @@ settings.json
 testing
 users/profiles/*
 node_modules
+relay/links.json
