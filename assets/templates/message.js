@@ -9,7 +9,8 @@ module.exports = function(message) {
     content: message.content,
     options: {
       username: nickname || message.author.username,
-      avatarURL: message.author.avatarURL || message.author.defaultAvatarURL
+      avatarURL: message.author.avatarURL || message.author.defaultAvatarURL,
+      files: Array.from(message.attachments.values()).map(a => a.url)
     }
   };
 };

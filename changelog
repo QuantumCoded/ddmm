@@ -67,5 +67,6 @@ July 28 2019 7:40 PM MDT Version 1.2.0
   Removing class-manager
   Fixing commands and templates
 
-July 28 2019 8:50 PM MDT Version 1.2.1
+July 28 2019 9:16 PM MDT Version 1.2.1
   Adding links to gitignore
+  Adding file support to message template
