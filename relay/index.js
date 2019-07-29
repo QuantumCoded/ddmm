@@ -7,6 +7,13 @@ const assets = require('../assets');
 const users = require('../users');
 
 const linksPath = path.join(__dirname, 'links.json'); // ./links.json
+
+try {
+  fs.accessSync(linksPath, fs.constants.F_OK);
+} catch {
+  fs.writeFileSync(linksPath, '{}');
+}
+
 const links = JSON.parse(fs.readFileSync(linksPath,'utf8')); // Load the links in from the links file
 
 const userRelays = new Map(); // Map<userId, Relay>
