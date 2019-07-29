@@ -1,4 +1,4 @@
-const logger = require('../../utility/logger');
+const logger = require('./logger');
 
 class WebhookMessage {  
   constructor(channel, content = '', options = {}) {
@@ -25,7 +25,7 @@ class WebhookMessage {
               if (webhook) {
                 webhook.send(content, options) // Send the message
                   .catch(logger.error);
-              } else logger.error('Error: There was a problem constructing the webhook');
+              } else logger.error('There was a problem constructing the webhook');
             });
         } else {
           webhook.send(content, options) // Send the message
