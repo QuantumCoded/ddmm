@@ -49,3 +49,20 @@ July 27 2019 7:10 PM MDT Version 1.1.2
   Implementing users into index
   Adding support for getting names from profile
   Adding support for users without pictures
+
+July 28 2019 7:40 PM MDT Version 1.2.0
+  Abstracting logger to a module
+  Removing unused package.json files
+  Adding node_modules to gitignore
+  Fixing incorrect usage of the logger
+  Making settings a module
+  Making client a module
+  Changing settings path
+  Putting logger in module
+  Changing paths
+  Rewriting index.js
+  Adding relay module
+  Rewriting users module
+  Abstracting client events to events handler
+  Removing class-manager
+  Fixing commands and templates
