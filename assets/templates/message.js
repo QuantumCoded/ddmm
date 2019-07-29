@@ -1,16 +1,14 @@
-const Users = require('../../users');
+const users = require('../../users');
 
 module.exports = function(message) {
-  let name;
+  let nickname;
 
-  if (Users.userExists(message.author.id))  {
-    name = Users.getUser(message.author.id).getProperty('name');
-  } else name = message.author.username;
+  if (users.profiles.has(message.author.id)) nickname = users.profiles.get(message.author.id).getProperty('name');
 
   return {
     content: message.content,
     options: {
-      username: name,
+      username: nickname || message.author.username,
       avatarURL: message.author.avatarURL || message.author.defaultAvatarURL
     }
   };

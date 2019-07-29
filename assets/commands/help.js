@@ -1,4 +1,4 @@
-const WebhookMessage = require('../../class-manager/classes/webhook-message');
+const WebhookMessage = require('../../utility/webhook-message');
 const Assets = require('../index');
 
 module.exports = function(message, client) {
