@@ -1,3 +1,8 @@
-node_modules
-config/settings.json
 .vscode
+testing
+users/profiles/*
+relay/links.json
+sql
+node_modules/*
+token.txt
+!node_modules/ddmm

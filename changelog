@@ -1,0 +1,92 @@
+July 11 2019 1:05 AM MDT Version 1.0.1
+  Created change log
+  Tidying up code
+  Adding comments
+
+July 14 2019 6:05 PM MDT Version 1.0.2
+  Updating settings path in index.js
+  Removing node_modules from .gitignore
+  Installing winston
+  Adding testing to .gitignore
+  Adding logs to index.js
+  Adding logs to client.js
+  Adding logs to dms.js
+  Fixed logs not showing without a level flag
+  Adding logs to channel.js
+  Adding logs to message.js
+
+July 18 2019 2:31 PM MDT Version 1.0.3
+  Removing empty line at the end of package.json
+  Adding image support
+
+July 19 2019 1:11 AM MDT Version 1.1.0
+  Renamed dms to guild
+  Restructuring class manager
+  Formatting assets
+  Fixing bug where group dms are treated as internal
+  Replacing dms with guild in classes/channel.js
+  Creating assets manager
+  Creating help command
+  Fixing bug not destructing WebhookMessage in help
+  Creating eval command
+  Creating templates
+  Fixing bug not returning message template in index
+  Adding support for using assets in message class
+  Removing old command and template systems
+
+July 19 2019 9:29 AM MDT Version 1.1.1
+  Fixing bug where channel wasn't using assets
+  Removing unused classes from class manager
+
+July 27 2019 7:10 PM MDT Version 1.1.2
+  Minor tweaks
+  Creating the users module
+  Fixing bug with not adding new users to the map
+  Adding profiles to gitignore
+  Adding userExists to users module
+  Implementing user creation into channel
+  Implementing users into message class
+  Implementing users into index
+  Adding support for getting names from profile
+  Adding support for users without pictures
+
+July 28 2019 7:40 PM MDT Version 1.2.0
+  Abstracting logger to a module
+  Removing unused package.json files
+  Adding node_modules to gitignore
+  Fixing incorrect usage of the logger
+  Making settings a module
+  Making client a module
+  Changing settings path
+  Putting logger in module
+  Changing paths
+  Rewriting index.js
+  Adding relay module
+  Rewriting users module
+  Abstracting client events to events handler
+  Removing class-manager
+  Fixing commands and templates
+
+July 28 2019 9:31 PM MDT Version 1.2.1
+  Adding links to gitignore
+  Adding file support to message template
+  Removing invalid entries from maps on initialize
+  Adding recovery for deleted channels
+  Adding support for creating links.json
+  Removing node_modules
+
+January 11 2020 1:56 AM MST Version 1.3
+  Forgot to write down updates as they were made
+  Changed literally every single file in the project
+  Took a long break from making updates because I've been lonely and unmotivated
+  Updated the readme, go check it out, it looks nice
+  Got the imports manager working so now you can go write your own commands
+  Added imports.txt "describing" how to write imports for the bot
+  Changed the tense to past tense instead of present
+  Made a bad solution to a problem by putting a ddmm module in node_modules
+  Added a todo.log with some basic ideas written in it, this later became the readme
+  Added a ddmm module to make requiring all the packages easier for imports
+  Decided to be less formal in the changelog because, ya know too lazy to sound like a nerd
+  Changed to commiting the settings.json file because token is now stored in env variables
+  Linked ddmm on my machine but not sure if it works on other machines
+  Gonna just commit it man because why not
