@@ -93,8 +93,8 @@ If you're interested in properly educating me on how to use GitHub, then please 
 I'm not letting people donate to this project. At least not yet. I don't feel that the quality of it is up to the point that I'd be proud accepting money for it. If you'd like to help this project out, share it with your friends, family, you'r neighbor, shout it from the rooftops, just don't get the police called for a noise complaint. If you're interested in donating money, as time passes and others (possibly) come to work on the project you might eventually be able to if you really feel like we've (or I've, if it's still just me) done a good job. This money will most likely go towards paying those who work on this project to keep the development underway, or to buying Monter to keep me alive to work on it myself (if it's still just me).
 
 ### Contact Info
-Brendan Fields
-brendan.fields@d11.org
+Brendan Fields<br>
+brendan.fields@d11.org<br>
 Jeffrey#3330 - Discord
 
 *P.S. I respond to Discord the fastest so if you really want to get a hold of me I suggest doing it there (like, no, seriously, please only email me if you don't use Discord), I just put my email down to make myself look professional. Also, sending me a message on Discord or emailing me is not at all a bother. I would love hearing from people interested in the project. I'm still just a normal dude after all, I play guitar and dumb flash gmaes, I'm not some professional empoyee working for some large tech firm.*
