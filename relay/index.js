@@ -1,10 +1,7 @@
+const ddmm = require('ddmm');
+
 const fs = require('fs'); // Require fs to access files on the local machine
 const path = require('path'); // Require path to get file paths
-const logger = require('../utility/logger');
-const settings = require('../utility/settings');
-const WebhookMessage = require('../utility/webhook-message');
-const assets = require('../assets');
-const users = require('../users');
 
 const linksPath = path.join(__dirname, 'links.json'); // ./links.json
 
@@ -20,10 +17,12 @@ const userRelays = new Map(); // Map<userId, Relay>
 const channelRelays = new Map(); // Map<channelId, Relay>
 
 class Relay {
+  user;
   dms;
   channel;
 
   constructor(dmsChannel, guildChannel) {
+    this.user = dmsChannel.recipient;
     this.dms = dmsChannel;
     this.channel = guildChannel;
   }
@@ -46,44 +45,45 @@ const initializeLink = function(pair) {
     userRelays.set(userId, relay);
     channelRelays.set(channelId, relay);
 
-    logger.debug(`Created relay for ${dmsChannel.recipient.username}`);
+    ddmm.logger.debug(`Created relay for ${dmsChannel.recipient.username}`);
   } else {
-    logger.warn(`Invalid link {${userId}:${channelId}} removing entry`);
+    ddmm.logger.warn(`Invalid link {${userId}:${channelId}} removing entry`);
 
     userRelays.delete(userId);
     channelRelays.delete(channelId);
 
     delete links[userId];
-    fs.writeFileSync(linksPath, JSON.stringify(links));
+    fs.writeFileSync(linksPath, JSON.stringify(links, true, 2));
   }
 };
 
 // Initialize all of the links in links.json
 module.exports.initialize = function() {
-  logger.debug('Initializing relays...');
+  ddmm.logger.verbose('Initializing relays...');
   Object.entries(links).forEach(initializeLink);
-  logger.debug('Finished!');
+  ddmm.logger.verbose('Finished!');
 };
 
 // Create a relay for a new user
 module.exports.createRelay = function(user, initialMessage) {
   const client = require('../index');
 
-  let guildId = settings.getValue('guild-id'); // The dms guild id
+  let guildId = ddmm.settings.getValue('guild-id'); // The dms guild id
   let guild = client.guilds.get(guildId); // The dms guild
 
   // Create a channel for the user
-  logger.debug(`Creating a channel for user ${user.username}`);
+  ddmm.logger.debug(`Creating a channel for user ${user.username}`);
   guild.createChannel(user.username, {
-    parent: guild.channels.find(c => c.type == 'category' && c.name == 'dms')
+    type: 'text',
+    parent: guild.channels.find(c => c.type === 'category' && c.name === 'dms')
   }).then(channel => {
-    logger.debug('Channel created');
+    ddmm.logger.debug('Channel created');
 
     // If the user doesn't have a profile create one
-    if (!users.profiles.has(user.id)) {
-      logger.debug(`Creating profile for ${user.username}`);
+    if (!ddmm.users.profiles.has(user.id)) {
+      ddmm.logger.debug(`Creating profile for ${user.username}`);
 
-      users.createProfile(user.id, {
+      ddmm.users.createProfile(user.id, {
         name: user.username
       });
     }
@@ -93,12 +93,24 @@ module.exports.createRelay = function(user, initialMessage) {
 
     // Add the relay link to the links file
     links[user.id] = channel.id;
-    fs.writeFileSync(linksPath, JSON.stringify(links));
+    fs.writeFileSync(linksPath, JSON.stringify(links, true, 2));
 
-    logger.debug('Sending messages to channel');
-    new WebhookMessage(channel, assets.getTemplate('new-channel', user));
-    new WebhookMessage(channel, assets.getTemplate('message', initialMessage));
-  }).catch(logger.error);
+    ddmm.logger.debug('Sending messages to channel');
+    
+    ddmm.messages.send(channel, 'new-channel', user);
+    ddmm.messages.send(channel, 'message', initialMessage);
+  }).catch(ddmm.logger.error);
+};
+
+module.exports.deleteRelay = function(user) {
+  let userId = user.id;
+  let channelId = links[userId];
+
+  userRelays.delete(userId);
+  channelRelays.delete(channelId);
+
+  delete links[userId];
+  fs.writeFileSync(linksPath, JSON.stringify(links, true, 2));
 };
 
 module.exports.userRelays = userRelays; // Export the userRelays map

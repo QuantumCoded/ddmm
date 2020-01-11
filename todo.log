@@ -1,0 +1,81 @@
+This is an unordered list of feature ideas I plan to work on in the future.
+It may help developers decide if there's something in this project they could help me with.
+Until I get someone to work with, my motivation is going to be low, and progress slow.
+Even someone who understands how it works, but doesn't actually work on the code, would be insanely helpful.
+Anyways, my cry for help aside:
+
+standardize the messages with actual templates instead of adding a template for every type of messages
+  example: have a message, error, help, warning, settings, etc. template that take parameters instead of a changeColor and thisBroke template
+
+add a setup portion that allows a first time user to configure their settings without having to do it the nerd way through code
+
+make an installer for this project
+
+handle imports... somehow... that lets newbs actually import the files (maybe just leave instructions like drop folders in /imports)
+
+fix all the "NTS" bugs or features in comments (i think i can do most of them, there's only like 8)
+
+setting for enabling/disabling auto-acknowledgement of dm messages
+
+add a freekin help command ffs, it's not that hard
+  commands should have an export detailing their name, usage, and description
+  also show the imported packages with !help "package name" to get each one's help menu
+  require that imports contail a help files
+  write a help method for imports that allows the importing of these help files
+
+user input boxes
+  custom emojis!
+    two sets of controller buttons as squares like the regional indicators
+    XBOX et al. A: green, B: red, X: blue, Y: yellow (just recolor the regional indicators) and an X to cancel
+    Play Station: X: blue, Cirlce: red, Square: pink, Triangle: teal (actually custom icons) and an X to cancel
+
+  add an input box method that takes three-four parameters (title, ['opt1','opt2',null,'skipped opt3'], options?, callback)
+    callback gets called with 0-3 indicating what button was pressed and a -1 for a timeout or close (might make timeout -2 or something to distinguish)
+    timeout is specified as options {timeout: ms}
+
+auto translation
+  run messages through a filter to check what  language is is, if it differs from the recipient langauge run a popup
+
+  Message might be in "language here" would you like to translate it to "other language?"
+    A Translate
+    B Don't translate this message
+    X Don't translate any messages for this user
+    Y Translate to a different language
+
+  if a message is translated a message should be shown regarding the ability to auto-set a channel language
+
+add a language select command
+  set their language: !language theirLang
+  set both languages: !language theirLang myLang
+
+add a timezone feature
+  add the ability to store the time of a given user such that a !time command can show what time it is for them
+    !time: It is currently 69:69 in TIMEZONE
+    planned on having an analog clock image be generated using an API to put in the embed (would be a nice touch)
+
+add a status command
+  just shows the status of the user
+
+ability to create a channel the receives custom pings from a guild channel
+  for example receiving the raid status notifications from pub halls and shatters server
+  from just the user Funman
+
+ability to emoji an image or create an emoji from a guild emoji
+  !emoji <name> <url>
+  !emoji <name> <guildid> <emojiname>
+
+  if a message is just :name: then an image should be sent in place of it if it's in a relayable channel
+  on option to bypass this in a specific channel should be allowed for example a group chat with friends
+  another option to bypass this should be allowed through editing the code with a warning that it voids the stealth aspect
+  (this is done to keep people who don't understand the risk of changing it out, also because I think it's a bad idea to change)
+  (maybe I won't actually add this, who knows)
+  
+FIGURE OUT A BETTER WAY TO HANDLE THE DDMM MODULE!!!!!
+  adding a custom unofficial temp ddmm module to the node_modules folder is a BAD idea!!!
+  do it a better way in the future please!!!
+  no like, seriously think of something, anything
+
+add a command to send a message on a delay, like a goodnight message at a certain time
+  !timesend 7:32 pm Goodnight!
+
+change the way profiles are stored to use a sqlite database

@@ -1,6 +1,7 @@
+const ddmm = require('ddmm');
+
 const fs = require('fs'); // Require fs to access files on the local machine
 const path = require('path'); // Require the path module to reference the profiles path
-const logger = require('../utility/logger');
 
 // The class of a user's profile
 class Profile {
@@ -20,13 +21,13 @@ class Profile {
   // Set a property of the user's object
   setProperty(name, value) {
     this.object[name] = value;
-    fs.writeFileSync(this.path, JSON.stringify(this.object));
+    fs.writeFileSync(this.path, JSON.stringify(this.object, true, 2));
   }
 
   // Delete a property from the user
   delProperty(name) {
     delete this.object[name];
-    fs.writeFileSync(this.path, JSON.stringify(this.object));
+    fs.writeFileSync(this.path, JSON.stringify(this.object, true, 2));
   }
 }
 
@@ -44,49 +45,24 @@ const initializeUser = function(name) {
   // Validate the user
   if (client.users.has(id)) {
     profiles.set(id, new Profile(name)); // Add the profile to the map
-    logger.debug(`Loaded profile for ${client.users.get(id).username}`);
+    ddmm.logger.debug(`Loaded profile for ${client.users.get(id).username}`);
   } else {
-    logger.warn(`Invalid profile ${name} removing file`);
+    ddmm.logger.warn(`Invalid profile ${name} removing file`);
     fs.unlinkSync(path.join(profilesPath, name)); // Delete profile if it's invalid
   }
 };
 
 module.exports.initialize = function() {
-  logger.debug('Initializing user profiles...');
+  ddmm.logger.verbose('Initializing user profiles...');
   users.forEach(initializeUser);
-  logger.debug('Finished!');
+  ddmm.logger.verbose('Finished!');
 };
 
 module.exports.createProfile = function(id, object) {
   let fileName = id + '.json'
   let filePath = path.join(profilesPath, fileName);
-  fs.writeFileSync(filePath, JSON.stringify(object));
+  fs.writeFileSync(filePath, JSON.stringify(object, true, 2));
   initializeUser(fileName);
 };
 
 module.exports.profiles = profiles;
-
-/* 
-// Get a user from their id
-module.exports.getUser = function(id) {
-  if (profiles.has(id)) {
-    return profiles.get(id);
-  } // Else throw error
-};
-
-// Get a user from their channel id
-module.exports.getChannelRecipient = function(id) {
-  let users = Array.from(profiles.values());
-  return users.find(user => user.object.channel == id);
-};
-
-// Create a new user with an id and settings
-module.exports.createUser = function(id, object) {
-  let file_name = id + '.json';
-  let user_path = path.join(profiles_path, file_name);
-  fs.writeFileSync(user_path, JSON.stringify(object || {}));
-  profiles.set(id, new Profile(file_name));
-};
-
-// Check if a user exists in the profiles map
-module.exports.userExists = (id) => profiles.has(id); */

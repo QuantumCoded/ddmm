@@ -1,0 +1,18 @@
+Since there is no documentation for how to do this I'm going to quickly write this text file explaining how to write imports
+
+Basically it's like this:
+
+imports
+`-package name
+  |-commands
+  | `-command.js
+  `-messages
+    `-message.js
+
+That's the layout of a simple package. It adds the command "command" and the message template "message"
+These files are to be formatted EXACTLY the same as the files in /commands/assets and /messages/assets
+They will just be pulled in as if they were part of those folders whenever the bot starts up
+
+I know this isn't incredibly descriptive, but I'm sure it should be enought to help those trying to figure it out along
+If you still need help, my email and Discord are in the bottom of the readme.
+Feel free to shoot me a message, I won't be bothered at all. I'm just a normal dude.

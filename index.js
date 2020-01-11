@@ -1,18 +1,15 @@
-const discord = require('discord.js');
-const settings = require('./utility/settings');
-const fs = require('fs');
-const path = require('path');
+const discord = require('discord.js'); // The discord API for node.js, yes I'm "abusing" this pls don't ban it's a cool project
+const ddmm = require('ddmm');
 
-const eventsPath = path.join(__dirname, 'events');
-const eventHandlers = fs.readdirSync(eventsPath);
+const token = process.env.DISCORD_TOKEN || ddmm.settings.getValue('token'); // The auth token for the client
+const client = new discord.Client();                                        // The client to be logged in
 
-const token = settings.getValue('token');
-const client = new discord.Client();
+// Attempt to log in the client
+client.login(token)
+  .catch(ddmm.logger.error);
+ 
+// Bind the event handler to the client
+ddmm.events.bind(client);
 
-client.login(token);
-
-eventHandlers.forEach(name => {
-  client.on(name.replace('.js',''), require(path.join(eventsPath, name)));
-});
-
+// Export the client
 module.exports = client;

@@ -1,6 +1,8 @@
-settings.json
 .vscode
 testing
 users/profiles/*
-node_modules
 relay/links.json
+sql
+node_modules/*
+token.txt
+!node_modules/ddmm
