@@ -14,7 +14,7 @@ Setup:
 * First, the node.js interpreter must be present on the machine before running it.
   * Node can be downloaded <a href="https://nodejs.org/" target="_blank">here</a>.
 * Secondly, you must have obtained your Discord token to insert into the `/settings.json` file before running.
-  * You can find your Discord token by following <a href="https://youtu.be/tI1lzqzLQCs" target="_blank"> tutorial. (Contact me if this link breaks)
+  * You can find your Discord token by following <a href="https://youtu.be/tI1lzqzLQCs" target="_blank">tutorial</a>. (Contact me if this link breaks)
 * Then, you must copy and paste your token into the file named `settings.json` in the main directory on the line containing `token: ""` e.x. `token: "my token here"`.
   * For those concerned about stealing your login information, I encourage you to point out any posibilites that your information could be stolen! I have no intentions on taking anyone's information and vulnerabilities in user privacy are of the upmost importance to me!
   * Later I plan to do this process through the use of having you log into your Discord account in the installer ~~if~~ when one gets made. (If doing this is possible, I have no idea)
