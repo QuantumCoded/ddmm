@@ -4,8 +4,13 @@ Until I get someone to work with, my motivation is going to be low, and progress
 Even someone who understands how it works, but doesn't actually work on the code, would be insanely helpful.
 Anyways, my cry for help aside:
 
+
+
+
 standardize the messages with actual templates instead of adding a template for every type of messages
   example: have a message, error, help, warning, settings, etc. template that take parameters instead of a changeColor and thisBroke template
+
+change the logging levels around to make it more clear what's going on if the user dosen't set a custom log level
 
 add a setup portion that allows a first time user to configure their settings without having to do it the nerd way through code
 
@@ -23,15 +28,16 @@ add a freekin help command ffs, it's not that hard
   require that imports contail a help files
   write a help method for imports that allows the importing of these help files
 
+Working on this now!
 user input boxes
   custom emojis!
     two sets of controller buttons as squares like the regional indicators
     XBOX et al. A: green, B: red, X: blue, Y: yellow (just recolor the regional indicators) and an X to cancel
-    Play Station: X: blue, Cirlce: red, Square: pink, Triangle: teal (actually custom icons) and an X to cancel
+    Play Station: X: blue, Cirlce: red, Square: pink, Triangle: teal (actually custom icons) and an X to cancel <-- Decided to go with this one
 
   add an input box method that takes three-four parameters (title, ['opt1','opt2',null,'skipped opt3'], options?, callback)
     callback gets called with 0-3 indicating what button was pressed and a -1 for a timeout or close (might make timeout -2 or something to distinguish)
-    timeout is specified as options {timeout: ms}
+    timeout is specified as options {timeout: ms, deleteOnTimeout: true}
 
 auto translation
   run messages through a filter to check what  language is is, if it differs from the recipient langauge run a popup
@@ -70,6 +76,8 @@ ability to emoji an image or create an emoji from a guild emoji
   (this is done to keep people who don't understand the risk of changing it out, also because I think it's a bad idea to change)
   (maybe I won't actually add this, who knows)
   
+
+I think I got this one taken care of now actually!
 FIGURE OUT A BETTER WAY TO HANDLE THE DDMM MODULE!!!!!
   adding a custom unofficial temp ddmm module to the node_modules folder is a BAD idea!!!
   do it a better way in the future please!!!

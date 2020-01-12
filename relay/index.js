@@ -47,7 +47,7 @@ const initializeLink = function(pair) {
 
     ddmm.logger.debug(`Created relay for ${dmsChannel.recipient.username}`);
   } else {
-    ddmm.logger.warn(`Invalid link {${userId}:${channelId}} removing entry`);
+    ddmm.logger.warn(`Invalid link {${userId}:${channelId}} removing entry (This should be safe to ignore)`);
 
     userRelays.delete(userId);
     channelRelays.delete(channelId);

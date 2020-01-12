@@ -90,3 +90,10 @@ January 11 2020 1:56 AM MST Version 1.3
   Changed to commiting the settings.json file because token is now stored in env variables
   Linked ddmm on my machine but not sure if it works on other machines
   Gonna just commit it man because why not
+
+January 11 10:28 2020 PM MST Version 1.3.1
+  Decided to go with the playstation buttons despite not knowing what they mean
+  Changed the invalid link log text to note that it should be safe to ignore
+  Changed some misc log levels around
+  Added an info message about the ability to change the log level parameter
+  Removed the staging branch because it felt like a hassle but I might add it back later
