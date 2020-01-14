@@ -1,6 +1,6 @@
 const ddmm = require('ddmm');
 
-module.exports = function(channel, content) {
+module.exports = function(channel, content, callback) {
   let webhook;
 
   let options = content.options;
@@ -20,11 +20,13 @@ module.exports = function(channel, content) {
             // If the webhook was created then send the message, otherwise error
             if (webhook) {
               webhook.send(content, options) // Send the message
+                .then(callback)
                 .catch(ddmm.logger.error);
             } else ddmm.logger.error('There was a problem constructing the webhook');
           });
       } else {
         webhook.send(content, options) // Send the message
+          .then(callback)
           .catch(ddmm.logger.error);
       }
     });

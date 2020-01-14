@@ -3,6 +3,10 @@ const ddmm = require('ddmm');
 const fs = require('fs'); // Require fs to access files on the local machine
 const path = require('path'); // Require the path module to reference the profiles path
 
+const profilesPath = path.join(__dirname, 'profiles'); // ./profiles
+
+const profiles = new Map();
+
 // The class of a user's profile
 class Profile {
   path;
@@ -31,14 +35,11 @@ class Profile {
   }
 }
 
-const profilesPath = path.join(__dirname, 'profiles'); // ./profiles
-const users = fs.readdirSync(profilesPath);
+// Validate and store a profile into the profiles map
+const initializeProfile = function(name) {
+  let client = ddmm.getClient();
 
-const profiles = new Map(); // Map<id, profile>
-
-// Validate and create a profile from a user file
-const initializeUser = function(name) {
-  const client = require('../index');
+  if (name === '.gitignore') return; // Ignore the .gitignore file
 
   let id = name.replace('.json',''); // The user's id
 
@@ -52,17 +53,21 @@ const initializeUser = function(name) {
   }
 };
 
+// Initialize all the profiles in the profiles directory
 module.exports.initialize = function() {
   ddmm.logger.verbose('Initializing user profiles...');
-  users.forEach(initializeUser);
+
+  fs.readdirSync(profilesPath).forEach(initializeProfile);
+
   ddmm.logger.verbose('Finished!');
 };
 
+// Create a profile for a user with custom settings
 module.exports.createProfile = function(id, object) {
   let fileName = id + '.json'
   let filePath = path.join(profilesPath, fileName);
   fs.writeFileSync(filePath, JSON.stringify(object, true, 2));
-  initializeUser(fileName);
+  initializeProfile(fileName);
 };
 
 module.exports.profiles = profiles;

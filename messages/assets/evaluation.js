@@ -1,6 +1,5 @@
 module.exports = function(options) {
   return {
-    content: '',
     options: {
       username: 'Eval',
       embeds: [{

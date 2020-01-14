@@ -1,9 +1,9 @@
-July 11 2019 1:05 AM MDT Version 1.0.1
+Version 1.0.1
   Created change log
   Tidying up code
   Adding comments
 
-July 14 2019 6:05 PM MDT Version 1.0.2
+Version 1.0.2
   Updating settings path in index.js
   Removing node_modules from .gitignore
   Installing winston
@@ -15,11 +15,11 @@ July 14 2019 6:05 PM MDT Version 1.0.2
   Adding logs to channel.js
   Adding logs to message.js
 
-July 18 2019 2:31 PM MDT Version 1.0.3
+Version 1.0.3
   Removing empty line at the end of package.json
   Adding image support
 
-July 19 2019 1:11 AM MDT Version 1.1.0
+Version 1.1.0
   Renamed dms to guild
   Restructuring class manager
   Formatting assets
@@ -34,11 +34,11 @@ July 19 2019 1:11 AM MDT Version 1.1.0
   Adding support for using assets in message class
   Removing old command and template systems
 
-July 19 2019 9:29 AM MDT Version 1.1.1
+Version 1.1.1
   Fixing bug where channel wasn't using assets
   Removing unused classes from class manager
 
-July 27 2019 7:10 PM MDT Version 1.1.2
+Version 1.1.2
   Minor tweaks
   Creating the users module
   Fixing bug with not adding new users to the map
@@ -50,7 +50,7 @@ July 27 2019 7:10 PM MDT Version 1.1.2
   Adding support for getting names from profile
   Adding support for users without pictures
 
-July 28 2019 7:40 PM MDT Version 1.2.0
+Version 1.2.0
   Abstracting logger to a module
   Removing unused package.json files
   Adding node_modules to gitignore
@@ -67,7 +67,7 @@ July 28 2019 7:40 PM MDT Version 1.2.0
   Removing class-manager
   Fixing commands and templates
 
-July 28 2019 9:31 PM MDT Version 1.2.1
+Version 1.2.1
   Adding links to gitignore
   Adding file support to message template
   Removing invalid entries from maps on initialize
@@ -75,7 +75,7 @@ July 28 2019 9:31 PM MDT Version 1.2.1
   Adding support for creating links.json
   Removing node_modules
 
-January 11 2020 1:56 AM MST Version 1.3
+Version 1.3
   Forgot to write down updates as they were made
   Changed literally every single file in the project
   Took a long break from making updates because I've been lonely and unmotivated
@@ -90,3 +90,34 @@ January 11 2020 1:56 AM MST Version 1.3
   Changed to commiting the settings.json file because token is now stored in env variables
   Linked ddmm on my machine but not sure if it works on other machines
   Gonna just commit it man because why not
+
+Version 1.3.1
+  Decided to go with the playstation buttons despite not knowing what they mean
+  Changed the invalid link log text to note that it should be safe to ignore
+  Changed some misc log levels around
+  Added an info message about the ability to change the log level parameter
+  Removed the staging branch because it felt like a hassle but I might add it back later
+  Created a new message template of notification, this is really generic now, but customization will be added
+  Changed repic and rename commands over to using the new notification template
+  Removed the now depricated repic and rename-channel templates
+  Made some symantic changes here and there
+  Removed dates from the Versions in changelog
+  Changed information about setting up this project inthe readme to be more correct
+  Added some example documentation using mermaid (Not sure if all documentation will be done like this, gimme feedback please!)
+  Decided to change from Version x.x.0 format to Version x.x format midway through for some reason (I think it looks better though)
+  Added support for messages/webhook.js to handle callbacks
+  Changed rename to support names with spaces
+  Added a .gitignore file to /imports and /users/profiles to ensure they exist on the repo when cloned/downloaded
+  Changed /users/index.js to ignore the .gitignore in /users/profile
+  Changes /utility/imports.js to ignore the .gitignore in /imports
+  Discovered the discord.js master branch is unusable for this project. (Without modification)
+  Documented how reactable messages should work
+  Added a makeReactable method to messages/index.js to set up a message in the reactableMap
+  Added a messageReactionRemove event in events/assets to relay reaction removes to messages/index.js
+  Added a messageUnreact method in messages/index.js to handle the messageReactionRemove event
+  Added a createReactable command in commands/assets to create a simple reactable
+  Finished suppot for creating reactable messages
+  Removed guild id from settings
+  Removed ddmm from .gitignore (because my link isn't the same as yours)
+  Added user input to current feature on readme
+  Added pdf versions of the documentation as github won't render mermaid or html - git bad

@@ -11,6 +11,10 @@ module.exports.commands = function(map) {
   let packages = getPackages();
 
   packages.forEach(package => {
+    if (package === '.gitignore') return; // Ignore the .gitignore
+
+    // NTS: Change this to later only accept directories and ignore all files
+
     let packagePath = path.join(importsPath, package);
     let imports = fs.readdirSync(packagePath);
 
@@ -30,7 +34,11 @@ module.exports.commands = function(map) {
 module.exports.messages = function(map) {
  let packages = getPackages();
 
- packages.forEach(package => {
+  packages.forEach(package => {
+    if (package === '.gitignore') return; // Ignore the .gitignore
+
+    // NTS: Change this to later only accept directories and ignore all files
+
     let packagePath = path.join(importsPath, package);
     let imports = fs.readdirSync(packagePath);
 
@@ -44,7 +52,7 @@ module.exports.messages = function(map) {
         map.set(resource.replace('.js', ''), require(resourcePath));
       });
     }
- });
+  });
 };
 
 module.exports.events = function() {

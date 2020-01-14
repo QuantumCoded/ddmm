@@ -1,7 +1,6 @@
 module.exports = function(user) {
   return {
-    content: '',
-    options: {
+  options: {
       username: 'Info',
       embeds: [{
         title: `**Opened a DM channel with ${user.username}**`,

@@ -47,7 +47,7 @@ const initializeLink = function(pair) {
 
     ddmm.logger.debug(`Created relay for ${dmsChannel.recipient.username}`);
   } else {
-    ddmm.logger.warn(`Invalid link {${userId}:${channelId}} removing entry`);
+    ddmm.logger.warn(`Invalid link {${userId}:${channelId}} removing entry (This should be safe to ignore)`);
 
     userRelays.delete(userId);
     channelRelays.delete(channelId);
@@ -71,22 +71,33 @@ module.exports.createRelay = function(user, initialMessage) {
   let guildId = ddmm.settings.getValue('guild-id'); // The dms guild id
   let guild = client.guilds.get(guildId); // The dms guild
 
+  let profileName; // The name of the user in their profile if it exists
+
+  // NTS: Change this to pull from the settings to get the channel name
+    //    This prevents username / channel name mismatch on the webhooks
+
+  // If the user doesn't have a profile create one, otherwise create the channel with their profile
+  if (ddmm.users.profiles.has(user.id)) {
+    let profile = ddmm.users.profiles.get(user.id);
+
+    if (profile) profileName = profile.getProperty('name');
+    else ddmm.logger.error(`Fetched an empty profile ${user.id}`);
+  } else {
+    ddmm.logger.debug(`Creating profile for ${user.username}`);
+
+    ddmm.users.createProfile(user.id, {
+      name: user.username
+    });
+  }
+
   // Create a channel for the user
   ddmm.logger.debug(`Creating a channel for user ${user.username}`);
-  guild.createChannel(user.username, {
+
+  guild.createChannel(profileName || user.username, {
     type: 'text',
     parent: guild.channels.find(c => c.type === 'category' && c.name === 'dms')
   }).then(channel => {
     ddmm.logger.debug('Channel created');
-
-    // If the user doesn't have a profile create one
-    if (!ddmm.users.profiles.has(user.id)) {
-      ddmm.logger.debug(`Creating profile for ${user.username}`);
-
-      ddmm.users.createProfile(user.id, {
-        name: user.username
-      });
-    }
 
     // Add the relay to the map
     initializeLink([user.id, channel.id]);

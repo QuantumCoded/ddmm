@@ -5,4 +5,3 @@ relay/links.json
 sql
 node_modules/*
 token.txt
-!node_modules/ddmm
