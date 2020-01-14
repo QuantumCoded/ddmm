@@ -40,11 +40,11 @@ Setup:
 * Evaluate a piece of JavaScript code with the usage of the `eval <code>` command. (Can interface DDMM)
 * Delete the DMs guild with the usage of the `delguild` command.
 * Write your own commands and message templates with the `imports` module. Documentation for how to do so should maybe be coming in the future.
+* Ability to select an option by reacting to a input box. As well as the ability to create your own (documented in `/documentation/messages/index.md`)
 
 ### Features to be added
 *Note: Many of these ideas came from the `/todo.log` file if you're interested in checking out all of my planned updates to the project. Help with these ideas would also be appreciated!*
 * View a list of all the commands and usage with the `help <command | page>` command.
-* Ability to select an option by reacting to a input box.
 * Preform language detection and prompt the user if they would like the message to be translated when sending/receiving.
 * Allow for the selection of channel languages with the `language <recipient language> [user language]` command.
 * View/set the time of the recipient with the `time [time | timezone]` command.
