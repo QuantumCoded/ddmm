@@ -121,3 +121,6 @@ Version 1.3.1
   Removed ddmm from .gitignore (because my link isn't the same as yours)
   Added user input to current feature on readme
   Added pdf versions of the documentation as github won't render mermaid or html - git bad
+  Renamed documentation to docs because it's too long otherwise
+  Fixed typo in docs/events/assets/message.md
+  Changed readme to reflect propper documentation directory
