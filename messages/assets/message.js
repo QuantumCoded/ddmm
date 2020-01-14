@@ -9,6 +9,7 @@ module.exports = function(message) {
     nickname = profile.getProperty('name');
     picture = profile.getProperty('profile-picture');
   }
+  
   return {
     content: message.content,
     options: {

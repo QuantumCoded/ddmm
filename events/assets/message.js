@@ -73,17 +73,22 @@ module.exports = function(message) {
       if (ddmm.relay.userRelays.has(message.author.id)) {
         let userRelay = ddmm.relay.userRelays.get(message.author.id); // Get the relay for the user
 
-        // Validate the map integrity
-        if (!client.channels.has(userRelay.channel.id) || !client.channels.has(userRelay.dms.id)) {
-          // NTS: Add the ability to disable the auto reconstruct
+        //NTS: Removed "|| !client.channels.has(userRelay.dms.id)" from the if
+          //   But the dms channel should always exist if a message is being recieved from it
+          //   If this causes any problems it will be added back or, if not, scrapped later
 
+        // Validate the map integrity
+        if (client.channels.has(userRelay.channel.id)) {
+          ddmm.logger.debug('Sending a message to the channel');
+          ddmm.messages.send(userRelay.channel, 'message', message); // Send a message to the user's channel
+        } else {
+          // NTS: Add the ability to disable the auto reconstruct
+          
           ddmm.relay.initialize();
           ddmm.relay.createRelay(message.author, message);
-          return;
         }
 
-        ddmm.logger.debug('Sending a message to the channel');
-        ddmm.messages.send(userRelay.channel, 'message', message); // Send a message to the user's channel
+
       } else {
         // Create a new relay for the user
         ddmm.logger.debug('The user doesn\'t have a relay creating a new one');

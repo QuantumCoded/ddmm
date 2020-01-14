@@ -6,19 +6,38 @@ Anyways, my cry for help aside:
 
 
 
+Finished things {
+  converted all the messages over to semi-standardized templates! yaayyy!
+}
 
-standardize the messages with actual templates instead of adding a template for every type of messages
-  example: have a message, error, help, warning, settings, etc. template that take parameters instead of a changeColor and thisBroke template
+PANIC!!!! discord.js master has removed the ability to log in with a user's token
+  which means i'll be forced to use an older version of the API or write my own
+  neither of which i want to do!
+
+  i haven't looked into why it won't allow for this, but it's preventing me from using a reactionCollector to collect reaction removes
+  which means i have to do the user input boxes differently than i had hoped, which sucks because the event would make everything look
+  nicer, so if someone can figure out how to make it to where i can use discord.js master without it beaning my ability to log in
+
+  figured out that one is using a /bot gateway whereas the other is not, which invalidates the user's token
+  for now i'll just do the handling with a cache and checking on the reactionRemoved event, but this DOES need to be figured out. I'd imagine a module
+  could be written to require, overwrite, then export discord.js in order to change it's gateway address (if that even is the problem) allowing for the
+  login of user accounts again.
+
+add support for linux-like flags in commands
+  repic [-w <width> | -h <height>] <url>
+
+(this won't actually be used on repic like this, it's just for example purposes)
 
 change the logging levels around to make it more clear what's going on if the user dosen't set a custom log level
 
-add a setup portion that allows a first time user to configure their settings without having to do it the nerd way through code
+add a setup portion that allows a first time user to configure their settings without having to do it the nerd way (through code)
 
-make an installer for this project
+make an installer for this project (or package it to npm to include the setup, which allows for installing with "npm i -g ddmm" which is SUPER cool!!)
+  also i swear if anyone takes ddmm off npm's availability i'm going to sue.
 
 handle imports... somehow... that lets newbs actually import the files (maybe just leave instructions like drop folders in /imports)
 
-fix all the "NTS" bugs or features in comments (i think i can do most of them, there's only like 8)
+fix all the "NTS" bugs or features in comments (i think i can do most of them, there's only like 8 but i keep adding more so who knows)
 
 setting for enabling/disabling auto-acknowledgement of dm messages
 

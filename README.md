@@ -11,14 +11,19 @@ DDMM, or Discord Direct Message Manager, is a project inspired by an observation
 In order to use this project, some setup is required! This is hopefully only while it is under development as one of the planned features is to package it into an installer.
 
 Setup:
-* First, the node.js interpreter must be present on the machine before running it.
-  * Node can be downloaded <a href="https://nodejs.org/" target="_blank">here</a>.
-* Secondly, you must have obtained your Discord token to insert into the `/settings.json` file before running.
-  * You can find your Discord token by following <a href="https://youtu.be/tI1lzqzLQCs" target="_blank">tutorial</a>. (Contact me if this link breaks)
-* Then, you must copy and paste your token into the file named `settings.json` in the main directory on the line containing `token: ""` e.x. `token: "my token here"`.
+* The project must be cloned / downloaded to it's own folder.
+  * The zip can be downloaded <a href="https://github.com/QuantumCoded/ddmm/archive/master.zip" target="_blank">here</a>.
+* You must obtaine your Discord token and insert it into the `/settings.json` file before running.
+  * You can find your Discord token by following this <a href="https://youtu.be/tI1lzqzLQCs" target="_blank">tutorial</a>. (Contact me if this link breaks)
+* You must copy and paste your token into `/settings.json` on the line containing `token: ""` e.x. `token: "my token here"`.
   * For those concerned about stealing your login information, I encourage you to point out any posibilites that your information could be stolen! I have no intentions on taking anyone's information and vulnerabilities in user privacy are of the upmost importance to me!
   * Later I plan to do this process through the use of having you log into your Discord account in the installer ~~if~~ when one gets made. (If doing this is possible, I have no idea)
+* The node.js interpreter must be present on the machine before completing the following steps.
+  * Node can be downloaded <a href="https://nodejs.org/" target="_blank">here</a>.
 * The project's dependencies must be updated by opening a terminal in the source directory (shift right-click on any space that isn't a file and select open command prompt / powershell here) and running `npm up` or `npm update`.
+* The `/ddmm` module needs to be linked in `/node_modules` such that all the other modules can make calls to it. (This should be handled automatically later)
+  * In the same terminal after npm finishes updating run `npm link ./ddmm`.
+* The project (*should*) now be able to run. Start it using `node . [-l <log level>]`.
 
 ## Features
 

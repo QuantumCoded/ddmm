@@ -1,7 +1,5 @@
 const ddmm = require('ddmm');
 
-// NTS: Prevent the closing of non-relayable channels (like general)
-
 module.exports = function(message) {
   if (ddmm.relay.channelRelays.has(message.channel.id)) {
     let user = ddmm.relay.channelRelays.get(message.channel.id).user;

@@ -3,7 +3,6 @@ module.exports = function(content) {
   let color = colors[Math.floor(Math.random() * colors.length)];
   
   return {
-    content: '',
     options: {
       username: 'Sticky Notes',
       embeds: [{
