@@ -438,8 +438,8 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
 
         events/assets ->> messages: send(relay.channel, 'message', message)
         messages ->> messages: templates.has(name)
-        messages -->> messages: true*
-        messages ->> messages: templates.get(name)*
+        messages -->> messages: true
+        messages ->> messages: templates.get(name)
         messages -->> messages: templateConstructor
         messages ->> messages/assets: templateConstructor(initialMessage)
 
@@ -528,7 +528,7 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
           users ->> users: profiles.set(id, profile)
         end
 
-        relay ->> guild: createChannel(profileName || username, {...})
+        relay ->> guild: createChannel(profileName || user.username, {...})
         guild -->> relay: .then(channel)
 
         relay ->> relay: initializeLink([user.id, channel.id])
@@ -594,7 +594,7 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
         users ->> users: profiles.set(id, profile)
       end
 
-      relay ->> guild: createChannel(profileName || username, {...})
+      relay ->> guild: createChannel(profileName || user.username, {...})
       guild -->> relay: .then(channel)
 
       relay ->> relay: initializeLink([user.id, channel.id])

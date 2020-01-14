@@ -106,7 +106,7 @@
           users ->> users: profiles.set(id, profile)
         end
 
-        relay ->> guild: createChannel(profileName || username, {...})
+        relay ->> guild: createChannel(profileName || user.username, {...})
         guild -->> relay: .then(channel)
 
         relay ->> relay: initializeLink([user.id, channel.id])
