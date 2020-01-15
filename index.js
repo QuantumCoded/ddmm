@@ -5,7 +5,7 @@ const token = process.env.DISCORD_TOKEN || ddmm.settings.getValue('token'); // T
 const client = new discord.Client();                                        // The client to be logged in
 
 // Attempt to log in the client
-client.login('MjAzNTQzMzQ5MzQ3NjE0NzIw.XhMoeA.5iy_RFhPGyGgOY0SdpVKFW-7EyE')
+client.login(token)
   .catch(ddmm.logger.error);
  
 // Bind the event handler to the client
