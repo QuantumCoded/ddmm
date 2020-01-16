@@ -124,3 +124,10 @@ Version 1.3.1
   Renamed documentation to docs because it's too long otherwise
   Fixed typo in docs/events/assets/message.md
   Changed readme to reflect propper documentation directory
+
+Version 1.4
+  Renamed relay module to relays
+  Made major changes to the way they were requested and stored
+  Relays now only stores one map containing both userRelays and channelRelays so no distinction needs to be made
+  Relays is now a class of Relays that implements all of the old exports as well as extending a Map allowing for all of the calls
+  

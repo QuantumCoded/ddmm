@@ -45,13 +45,13 @@ module.exports = function() {
 
       Promise.all(promises).then(() => {
         ddmm.logger.info('Guild is formatted');
-        ddmm.relay.initialize(); // Clear out old entries
+        ddmm.relays.initialize(); // Set up the channel relays and remove any invalid ones
         ddmm.users.initialize(); // Initialize the users
       }).catch(ddmm.logger.error);
     }).catch(ddmm.logger.error);
   } else {
     ddmm.logger.debug('Guild exists');
-    ddmm.relay.initialize(); // Initialize the relay maps
+    ddmm.relays.initialize(); // Initialize the relays map
     ddmm.users.initialize(); // Initialize the users
   }
 };

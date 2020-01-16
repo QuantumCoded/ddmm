@@ -12,7 +12,7 @@ module.exports = function(message) {
 
   // Create a flag for important characteristics or each message
   let isBotMessage = message.author.bot;                                                        // Was the message sent by a bot account
-  let isChannelRelayable = ddmm.relay.channelRelays.has(message.channel.id);                    // Was the message sent in a relayable guild channel
+  let isChannelRelayable = ddmm.relays.has(message.channel.id);                                 // Was the message sent in a relayable guild channel
   let isInternal = message.guild && message.guild.id === guildId;                               // Was the message sent in the guild
   let isIncoming = message.channel.type === 'dm' && client.user.id != message.author.id;        // Was the message sent in a dm channel by another user
   let isCommand = !isBotMessage && isInternal && message.content.startsWith(operators.command); // Was the message internal and using the command operator
@@ -66,8 +66,8 @@ module.exports = function(message) {
     case 'incoming':
       // If the user has a relay then send a message otherwise create a channel
       ddmm.logger.debug('Checking if the user has a relay');
-      if (ddmm.relay.userRelays.has(message.author.id)) {
-        let userRelay = ddmm.relay.userRelays.get(message.author.id); // Get the relay for the user
+      if (ddmm.relays.has(message.author.id)) {
+        let userRelay = ddmm.relays.get(message.author.id); // Get the relay for the user
 
         //NTS: Removed "|| !client.channels.has(userRelay.dms.id)" from the if
           //   But the dms channel should always exist if a message is being recieved from it
@@ -80,15 +80,15 @@ module.exports = function(message) {
         } else {
           // NTS: Add the ability to disable the auto reconstruct
           
-          ddmm.relay.initialize();
-          ddmm.relay.createRelay(message.author, message);
+          ddmm.relays.initialize();
+          ddmm.relays.createRelay(message.author, message);
         }
 
 
       } else {
         // Create a new relay for the user
         ddmm.logger.debug('The user doesn\'t have a relay creating a new one');
-        ddmm.relay.createRelay(message.author, message);
+        ddmm.relays.createRelay(message.author, message);
       }
     break;
 
@@ -96,14 +96,14 @@ module.exports = function(message) {
     case 'relayable':
       // If the channel has a relay then send the message
       ddmm.logger.debug('Checking if the channel has a relay');
-      if (ddmm.relay.channelRelays.has(message.channel.id)) {
-        let userRelay = ddmm.relay.channelRelays.get(message.channel.id); // Get the relay for the channel
+      if (ddmm.relays.has(message.channel.id)) {
+        let userRelay = ddmm.relays.get(message.channel.id); // Get the relay for the channel
 
         ddmm.logger.debug('Relaying the message to the user');
         userRelay.dms.send(message.content, {files: Array.from(message.attachments.values()).map(a => a.url)}); // Send a message to the user
       } else {
         ddmm.logger.warn(`Unable to find the channel relay for ${message.channel.id}`);
-        ddmm.relay.initialize();
+        ddmm.relays.initialize();
       }
     break;
   }

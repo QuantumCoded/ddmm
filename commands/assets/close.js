@@ -1,16 +1,20 @@
 const ddmm = require('ddmm');
 
 module.exports = function(message) {
-  if (ddmm.relay.channelRelays.has(message.channel.id)) {
-    let user = ddmm.relay.channelRelays.get(message.channel.id).user;
+  // If the channel has a relay remove it, otherwise warn and reinitialize
+  if (ddmm.relays.has(message.channel.id)) {
+    let relay = ddmm.relays.get(message.channel.id); // The channel's relay
 
-    ddmm.logger.verbose(`Closing channel for user ${user.username}`);
+    ddmm.logger.verbose(`Closing channel for user ${relay.user.username}`);
 
-    ddmm.relay.deleteRelay(user);
-    message.channel.delete()
-      .catch(ddmm.logger.error);
+    // Remove the relay
+    ddmm.relays.deleteRelay(relay);
   } else {
-    ddmm.logger.error(`Unable to find the channel relay for ${message.channel.id}`);
-    ddmm.relay.initialize();
+    ddmm.logger.warn(`Unable to find the relay for channel ${message.channel.id}`);
+    ddmm.relays.initialize(); // Reinitialize the relays to remove the bad enteries
   }
+
+  // Delete the channel
+  message.channel.delete()
+    .catch(ddmm.logger.error);
 };
