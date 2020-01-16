@@ -421,7 +421,64 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
           : 'default'
     });
   </script>
-<h3 id="this-describes-the-process-of-a-new-incoming-message-in-eventsassetsmessagejs">This describes the process of a new incoming message in events/assets/message.js</h3>
+<h1 id="documentation-for-eventsassetsmessagesjs">Documentation for events/assets/messages.js</h1>
+<h2 id="the-process-of-handling-the-message-event">The process of handling the message event</h2>
+<pre><code class="language-mermaid"><div class="mermaid">  sequenceDiagram
+
+    events/assets ->> settings: getValue('operators')
+    settings -->> events/assets: operators
+
+    events/assets ->> settings: getValue('guild-id')
+    settings -->> events/assets: guildId
+
+    alt channel exists
+      events/assets ->> client: channels.has(message.channel.id)
+      client -->> events/assets: true
+      
+      alt channel has relay
+        events/assets ->> relay: channelRelays.has(message.channel.id)
+        relay -->> events/assets: true
+      else channel doesn't have relay
+        events/assets ->> relay: channelRelays.has(message.channel.id)
+        relay -->> events/assets: false
+      end
+
+    else channel doesn't exist
+      events/assets ->> client: channels.has(message.channel.id)
+      client -->> events/assets: false
+    end
+
+    note right of events/assets: Message classing.
+</div></code></pre>
+<div style="page-break-after:always;"></div>
+<h2 id="the-classification-of-messages">The classification of messages</h2>
+<p>A message is classified as <code>incoming</code> if:</p>
+<ul>
+<li>The message comes from a DM channel</li>
+<li>The message was not sent by the client user</li>
+</ul>
+<p>A message is classified as <code>relayable</code> if:</p>
+<ul>
+<li>The message was not sent by a bot</li>
+<li>The message is neither a command or note message</li>
+<li>The channel has an associated relay</li>
+</ul>
+<p>A message is classified as <code>note</code> if:</p>
+<ul>
+<li>The message was not sent by a bot</li>
+<li>The message was sent in the DMs guild</li>
+<li>The message starts with the note operator</li>
+</ul>
+<p>A message is classified as <code>command</code> if:</p>
+<ul>
+<li>The message was not sent by a bot</li>
+<li>The message was set in the DMs guild</li>
+<li>The message starts with the command operator</li>
+</ul>
+<h2 id="post-classification">Post-classification</h2>
+<p>If the message was classified, the handling is now determined by its class<br>Otherwise, the message is unclassified and will not be handled</p>
+<div style="page-break-after:always;"></div>
+<h2 id="the-process-of-handling-an-incoming-message">The process of handling an <code>incoming</code> message</h2>
 <pre><code class="language-mermaid"><div class="mermaid">  sequenceDiagram
 
     alt user has relay
@@ -449,7 +506,9 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
           messages/assets ->> users: profiles.get(message.author.id)
           users -->> messages/assets: profile
           messages/assets ->> messages/assets: profile.getProperty('name')
+          messages/assets -->> messages/assets: profileName
           messages/assets ->> messages/assets: profile.getProperty('profile-picture')
+          messages/assets -->> messages/assets: profilePicture
         else user doesn't have a profile
           messages/assets ->> users: profiles.has(message.author.id)
           users -->> messages/assets: false
@@ -529,7 +588,7 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
         end
 
         relay ->> guild: createChannel(profileName || user.username, {...})
-        guild -->> relay: .then(channel)
+        guild -->> relay: channel
 
         relay ->> relay: initializeLink([user.id, channel.id])
 
@@ -595,7 +654,7 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
       end
 
       relay ->> guild: createChannel(profileName || user.username, {...})
-      guild -->> relay: .then(channel)
+      guild -->> relay: channel
 
       relay ->> relay: initializeLink([user.id, channel.id])
 
@@ -635,14 +694,115 @@ void 0!==arguments[0]&&(br.sequenceConfig=arguments[0]),e=arguments[1]):e=argume
     end
 </div></code></pre>
 <div style="page-break-after:always;"></div>
-<!-- Sequence Diagram Template
-### Process title
-```mermaid
-  sequenceDiagram
+<h2 id="the-process-of-handling-a-relayable-message">The process of handling a <code>relayable</code> message</h2>
+<pre><code class="language-mermaid"><div class="mermaid">  sequenceDiagram
+    alt the channel has a relay
+      events/assets ->> relay: channelRelays.has(message.channel.id)
+      relay -->> events/assets: true
 
-```
+      events/assets ->> relay: channelRelays.get(message.channel.id)
+      relay -->> events/assets: relay
 
+      events/assets ->> events/assets: relay.dms.send(message.content, {...})
+    else the channel doesn't have a relay
+      events/assets ->> relay: channelRelays.has(message.channel.id)
+      relay -->> events/assets: false
+
+      events/assets ->> relay: initialize()
+        
+      loop Initialize Relays
+        relay ->> relay: initializeLink([userId, channelId])
+
+        alt relay has user and channel
+        
+          relay ->> client: users.has(userId)
+          client -->> relay: true
+          relay ->> client: channels.has(channelId)
+          client -->> relay: true
+
+          relay ->> client: users.get(userId).dmChannel
+          client -->> relay: dmChannel
+
+          relay ->> client: channels.get(channelId)
+          client -->> relay: guildChannel
+
+          relay ->> relay: new Relay(dmChannel, guildChannel)
+          relay -->> relay: relay
+
+          relay ->> relay: userRelays.set(userId, relay)
+          relay ->> relay: channelRelays.set(channelId, relay)
+
+        else missing user or channel
+
+          alt user is missing
+
+            relay ->> client: users.has(userId)
+            client -->> relay: false
+
+          else channel is missing
+
+            relay ->> client: channels.has(channelId)
+            client -->> relay: false
+          end
+
+          relay ->> relay: userRelays.delete(userId)
+          relay ->> relay: channelRelays.delete(channelId)
+        end
+      end
+    end
+</div></code></pre>
 <div style="page-break-after:always;"></div>
- -->
+<h2 id="the-process-of-handling-a-note-message">The process of handling a <code>note</code> message</h2>
+<pre><code class="language-mermaid"><div class="mermaid">  sequenceDiagram
+    events/assets ->> events/assets: message.content.replace(operators.note, '')
+    events/assets -->> events/assets: note
+
+    events/assets ->> events/assets: note.trim()
+    events/assets -->> events/assets: note
+
+    events/assets ->> events/assets: message.delete()
+
+    events/assets ->> messages: send(message.channel, 'note', note)
+    
+    messages ->> messages: templates.has(name)
+    messages -->> messages: true
+
+    messages ->> messages: templates.get(name)
+    messages -->> messages: templateConstructor
+
+    messages ->> messages/assets: templateConstructor(options)
+    messages/assets -->> messages: template
+
+    messages ->> webhook: webhook(channel, template)
+</div></code></pre>
+<div style="page-break-after:always;"></div>
+<h2 id="the-process-of-handling-a-command-message">The process of handling a <code>command</code> message</h2>
+<pre><code class="language-mermaid"><div class="mermaid">  sequenceDiagram
+    events/assets ->> events/assets: message.content.split(' ')
+    events/assets -->> events/assets: blocks
+
+    events/assets ->> events/assets: blocks.shift()
+    events/assets -->> events/assets: command
+
+    events/assets ->> events/assets: command.replace(operators.command, '')
+    events/assets -->> events/assets: commandName
+
+    events/assets ->> commands: execute(commandName, message)
+    
+    
+    alt command exists
+      commands ->> commands: commands.has(name)
+      commands -->> commands: true
+
+      commands ->> commands: commands.get(name)
+      commands -->> commands: commandFunction
+
+      commands ->> commands/assets: commandFunction(message)
+    else command doesn't exists
+      commands ->> commands: commands.has(name)
+      commands -->> commands: false
+    end
+</div></code></pre>
+<div style="page-break-after:always;"></div>
 </body>
 </html>

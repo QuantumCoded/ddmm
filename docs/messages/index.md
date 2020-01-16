@@ -59,8 +59,6 @@
     loop Unreact Handler
       events/assets ->> messages: messageUnreact(reaction, user)
 
-      messages ->> ddmm: getClient()
-      ddmm -->> messages: client
       note right of messages: Ensure user is<br/>client.user
 
       alt message is reactable
