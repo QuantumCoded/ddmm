@@ -66,7 +66,7 @@ module.exports.initialize = function() {
 
 // Create a relay for a new user
 module.exports.createRelay = function(user, initialMessage) {
-  const client = require('../index');
+  const client = ddmm.getClient();
 
   let guildId = ddmm.settings.getValue('guild-id'); // The dms guild id
   let guild = client.guilds.get(guildId); // The dms guild
@@ -80,8 +80,7 @@ module.exports.createRelay = function(user, initialMessage) {
   if (ddmm.users.profiles.has(user.id)) {
     let profile = ddmm.users.profiles.get(user.id);
 
-    if (profile) profileName = profile.getProperty('name');
-    else ddmm.logger.error(`Fetched an empty profile ${user.id}`);
+    profileName = profile.getProperty('name');
   } else {
     ddmm.logger.debug(`Creating profile for ${user.username}`);
 
