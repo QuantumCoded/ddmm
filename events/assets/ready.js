@@ -46,12 +46,12 @@ module.exports = function() {
       Promise.all(promises).then(() => {
         ddmm.logger.info('Guild is formatted');
         ddmm.relays.initialize(); // Set up the channel relays and remove any invalid ones
-        ddmm.users.initialize(); // Initialize the users
+        ddmm.profiles.initialize(); // Initialize the user profiles
       }).catch(ddmm.logger.error);
     }).catch(ddmm.logger.error);
   } else {
     ddmm.logger.debug('Guild exists');
-    ddmm.relays.initialize(); // Initialize the relays map
-    ddmm.users.initialize(); // Initialize the users
+    ddmm.relays.initialize(); // Set up the channel relays and remove any invalid ones
+    ddmm.profiles.initialize(); // Initialize the user profiles
   }
 };

@@ -72,14 +72,14 @@ class Relays extends Map {
     let profileName; // The name of the user in their profile if it exists
   
     // If the user doesn't have a profile create one, otherwise create the channel with their profile
-    if (ddmm.users.profiles.has(user.id)) {
-      let profile = ddmm.users.profiles.get(user.id);
+    if (ddmm.profiles.has(user.id)) {
+      let profile = ddmm.profiles.get(user.id);
   
       profileName = profile.getProperty('name');
     } else {
       ddmm.logger.debug(`Creating profile for ${user.username}`);
   
-      ddmm.users.createProfile(user.id, {
+      ddmm.profiles.createProfile(user.id, {
         name: user.username
       });
     }
@@ -94,7 +94,7 @@ class Relays extends Map {
       ddmm.logger.debug('Channel created');
   
       // Add the relay to the map
-      initializeLink(user.id, channel.id);
+      this._initializeLink(user.id, channel.id);
   
       // Add the relay link to the links file
       links[user.id] = channel.id;

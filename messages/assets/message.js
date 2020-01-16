@@ -3,8 +3,8 @@ const ddmm = require('ddmm');
 module.exports = function(message) {
   let nickname, picture;
 
-  if (ddmm.users.profiles.has(message.author.id)) {
-    let profile = ddmm.users.profiles.get(message.author.id);
+  if (ddmm.profiles.has(message.author.id)) {
+    let profile = ddmm.profiles.get(message.author.id);
 
     nickname = profile.getProperty('name');
     picture = profile.getProperty('profile-picture');

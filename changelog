@@ -130,4 +130,6 @@ Version 1.4
   Made major changes to the way they were requested and stored
   Relays now only stores one map containing both userRelays and channelRelays so no distinction needs to be made
   Relays is now a class of Relays that implements all of the old exports as well as extending a Map allowing for all of the calls
-  
+  Renamed users module to profiles
+  Made major changes to the way profiles were accessed and edited
+  Profiles now exports a class of Profiles that extends a Map allowing for all the old calls as well as those of a Map

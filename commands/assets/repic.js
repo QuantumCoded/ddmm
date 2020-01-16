@@ -15,8 +15,8 @@ module.exports = function(message) {
   // If the url exists then change the users profile picture, otherwise alert the user
   if (url.length > 0) {
     // If the user has a profile then change their profile-picture property
-    if (ddmm.users.profiles.has(relay.user.id)) {
-      ddmm.users.profiles.get(relay.user.id).setProperty('profile-picture', url);
+    if (ddmm.profiles.has(relay.user.id)) {
+      ddmm.profiles.get(relay.user.id).setProperty('profile-picture', url);
     }
     
     // Alert the user that the user's image updated successfully

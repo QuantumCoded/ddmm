@@ -23,7 +23,7 @@ module.exports = function(message) {
       .catch(ddmm.logger.error);
 
     // Rename the user's profile
-    ddmm.users.profiles.get(user.id).setProperty('name', name);
+    ddmm.profiles.get(user.id).setProperty('name', name);
 
     // Alert the user that the rename completed
     ddmm.messages.send(message.channel, 'notification', `Renamed ${user.username} to ${name}!`);
