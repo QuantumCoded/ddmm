@@ -2,6 +2,5 @@
 testing
 users/profiles/*
 relay/links.json
-sql
 node_modules/*
-token.txt
+misc/token.txt

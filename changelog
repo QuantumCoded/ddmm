@@ -133,3 +133,4 @@ Version 1.4
   Renamed users module to profiles
   Made major changes to the way profiles were accessed and edited
   Profiles now exports a class of Profiles that extends a Map allowing for all the old calls as well as those of a Map
+  Moved everything all the ways around and created a src directory a misc directory a processes directory

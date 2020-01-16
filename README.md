@@ -21,8 +21,8 @@ Setup:
 * The node.js interpreter must be present on the machine before completing the following steps.
   * Node can be downloaded <a href="https://nodejs.org/" target="_blank">here</a>.
 * The project's dependencies must be updated by opening a terminal in the source directory (shift right-click on any space that isn't a file and select open command prompt / powershell here) and running `npm up` or `npm update`.
-* The `/ddmm` module needs to be linked in `/node_modules` such that all the other modules can make calls to it. (This should be handled automatically later)
-  * In the same terminal after npm finishes updating run `npm link ./ddmm`.
+* The `src/ddmm` module needs to be linked in `/node_modules` such that all the other modules can make calls to it. (This should be handled automatically later)
+  * In the same terminal after npm finishes updating run `npm link src/ddmm`.
 * The project (*should*) now be able to run. Start it using `node . [-l <log level>]`.
 
 ## Features
@@ -63,13 +63,13 @@ Setup:
 
 ### Behind-the-scenes features to be added (things for developers)
 *These are going to be fairly boring to anyone who isn't interested in the code behind this project, feel free to skip over this section if you'd like.*
-* Change the method for storing profiles in the `/users` module to a SQLite3 database.
+* Change the method for storing profiles in the `src/profiles` module to a SQLite3 database.
 * Standardize the message templates such that the commands can construct them with parameters instead of having a custom message template for each command's message.
 * Integrate the ability to interface Google's translate API. I'm fairly certain this isn't free, I haven't really dug into it, just thought the ability to translate messages would be kinda nifty. Possibly look into walking each user through setting up their own API key such that they can use a free trial amount if it's provided. If there's no limit just include a custom API token for the project into the code. (Unless someone suggests a better idea).
 * Revise code and add comments where necessary, I think I've done a pretty okay job at making sure that my code is decently commented, but you can always add more!
 * Take care of any of the `NTS` (note to self) comments. There are there to remind me to fix various things and probably shouldn't be there for much longer. To keep the humor up, as well as the format the same, if this project gains a team the new acronym is going to be (needs tech support). That way all members know that, that note is to be implemented in the future.
 * Not that using a map to control the relays, messages, and commands is in any way inherently bad (as far as I'm aware), but I feel like there might be a better way of doing it. Just wanting to put out there that if anyone has any ideas on how this might be reworked to function better, I'm open to suggestions on it.
-* Come up with a different way to organize the `/utility` modules. I've hated looking at that directory ever since I've made it, but I've not been able to think of a better way to organize it and it works as is. I considered just leaving the modules open in the main directory but i feel like this could possible be confusing or just untidy. Any suggestions on how to organize this project going forward are always welcomed.
+* Come up with a different way to organize the `src/utility` modules. I've hated looking at that directory ever since I've made it, but I've not been able to think of a better way to organize it and it works as is. I considered just leaving the modules open in the main directory but i feel like this could possible be confusing or just untidy. Any suggestions on how to organize this project going forward are always welcomed.
 * This is my first project of a scale as large as this one, other than the work I've done as internships. I'm still very new to making code organization standards such that a team can effectively help. I'm probably going to end up reviewing and modifying code submissions if the style is too different than that of the rest of the project. Anyone with the ability to set up automatic code styling guidelines with something similar to what I've currently written (even if it means I have to rewrite some things in order to get them to meet the standards) such that others can write code in a similar style would be a huge benefit to this project if other begin working on it.
 * Explore the current cability of the imports system to add changes to the project's functionality. If this expandability isn't as extensive as it could be, it might be desired to upgrade the control hobbyist developers have over the project.
 * Add support for binding a message to another object for later access. An example of this would be binding a DM message to a DMs guild message to handle deleting both at the same time. (The same applies with editing)
@@ -82,7 +82,7 @@ Setup:
 If you're interested in helping write code for this project at least an intermediate understanding of node.js is required. If you're going to be working on the Discord interfacing portion, at minimum a rudimentary understanding of the discord.js library is also required (both are recommended).
 
 ##### Planning
-If you're interested in helping plan this project, only a surface level understanding of node.js and discord.js is required. However, an in depth functionality of a majority of the project and how the modules interface with each other is necessary. This is such that others can consult with you about the addition of code and how it will integrate with the rest of the project. What calls will be made to and from, and what will trigger those calls all the way back up to `/index.js`.
+If you're interested in helping plan this project, only a surface level understanding of node.js and discord.js is required. However, an in depth functionality of a majority of the project and how the modules interface with each other is necessary. This is such that others can consult with you about the addition of code and how it will integrate with the rest of the project. What calls will be made to and from, and what will trigger those calls all the way back up to `src/index.js`.
 
 ##### Standardization
 If you're interested in writing code standards for this project, knowledge of how to use a tool such as `ESLint` to write them is required. The ability to communicate with others to decide upon the format and educate them on how to write in it is required.
@@ -94,6 +94,8 @@ If you're interested in documenting this project the ability to write comprehens
 If you're interested in properly educating me on how to use GitHub, then please do, I'm not that experienced with the platform and am probably not using it to it's fullest ability.
 
 ### I'm not a developer, but I still want to help!
+
+CREATIVITY! No, seriously, coming up with good ideas to build on this framework is hard work. If anyone has ANY suggestions, please put them in issues
 
 I'm not letting people donate to this project. At least not yet. I don't feel that the quality of it is up to the point that I'd be proud accepting money for it. If you'd like to help this project out, share it with your friends, family, you'r neighbor, shout it from the rooftops, just don't get the police called for a noise complaint. If you're interested in donating money, as time passes and others (possibly) come to work on the project you might eventually be able to if you really feel like we've (or I've, if it's still just me) done a good job. This money will most likely go towards paying those who work on this project to keep the development underway, or to buying Monter to keep me alive to work on it myself (if it's still just me).
 
