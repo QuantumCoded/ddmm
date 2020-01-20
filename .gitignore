@@ -1,6 +1,5 @@
 .vscode
 testing
-users/profiles/*
-relay/links.json
+src/relays/links.json
 node_modules/*
 misc/token.txt
