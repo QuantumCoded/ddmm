@@ -134,3 +134,4 @@ Version 1.4
   Made major changes to the way profiles were accessed and edited
   Profiles now exports a class of Profiles that extends a Map allowing for all the old calls as well as those of a Map
   Moved everything all the ways around and created a src directory a misc directory a processes directory
+  Documented most of the things, just enough for people to know what to make calls to

@@ -1,4 +1,12 @@
+/**
+ * Relays module
+ * @module ddmm/relays
+ */
+
 const ddmm = require('ddmm');
+const User = require('discord.js').User;
+const GuildChannel = require('discord.js').GuildChannel;
+const Message = require('discord.js').Message;
 
 const fs = require('fs'); // Require fs to access files on the local machine
 const path = require('path'); // Require path to get file paths
@@ -14,24 +22,44 @@ try {
 
 const links = JSON.parse(fs.readFileSync(linksPath,'utf8')); // Load the links in from the links file
 
-// An individual relay connecting a user's DMs guild channel to them and their DMs
+/**
+ * The relay that connects a user's DMs to a guild channel.
+ */
 class Relay {
+
+  /**
+   * Constructs a relay binding a user's DMs to a guildChannel.
+   * @param {User} user The user to construct the relay for
+   * @param {GuildChannel} guildChannel The channel to bind the relay to
+   */
   constructor(user, guildChannel) {
+    /** The user. */
     this.user = user;
+    /** The user's id. */
     this.userId = user.id;
 
+    /** The guild channel. */
     this.channel = guildChannel;
+    /** The guild channel's id. */
     this.channelId = guildChannel.id;
 
+    /** The user's dm channel. */
     this.dms = user.dmChannel;
   }
 }
 
-// The map containing all the relays with some extra functionality for creating / modifying them
+/**
+ * The map containing all the relays with some extra functionality for creating / modifying them.
+ * @extends Map
+ */
 class Relays extends Map {
 
-  // The method for validating and setting up links
-  _initializeLink(userId, channelId) {
+  /**
+   * The method for validating and setting up relays.
+   * @param {string} userId The id of the user
+   * @param {string} channelId The id of the guildChannel
+   */
+  _initializeRelay(userId, channelId) {
     let client = require('../index');
 
     // Validate the link
@@ -56,13 +84,20 @@ class Relays extends Map {
     }
   }
 
-  // Calls _initializeLink on all the link pairs
+  /**
+   * Initialize all the relays in the links.json file.
+   */
   initialize() {
     ddmm.logger.verbose('Initializing relays...');
-    Object.entries(links).forEach(entry => this._initializeLink(...entry));
+    Object.entries(links).forEach(entry => this._initializeRelay(...entry));
     ddmm.logger.verbose('Finished!');
   }
 
+  /**
+   * Creates a relay and stores it in the links.json file.
+   * @param {User} user The user to create the relay for
+   * @param {Message} initialMessage The message to create the relay from
+   */
   createRelay(user, initialMessage) {
     let client = require('../index');
 
@@ -94,7 +129,7 @@ class Relays extends Map {
       ddmm.logger.debug('Channel created');
   
       // Add the relay to the map
-      this._initializeLink(user.id, channel.id);
+      this._initializeRelay(user.id, channel.id);
   
       // Add the relay link to the links file
       links[user.id] = channel.id;
@@ -107,7 +142,10 @@ class Relays extends Map {
     }).catch(ddmm.logger.error);
   }
 
-  // Remove a relay from the map
+  /**
+   * Removes a relay from the map and the links.json file.
+   * @param {Relay} relay The relay to remove
+   */
   deleteRelay = function(relay) {
     if (relays.has(relay.userId)) relays.delete(relay.userId);
     if (relays.has(relay.channelId)) relays.delete(relay.channelId);
@@ -117,4 +155,8 @@ class Relays extends Map {
   };
 }
 
+/**
+ * A map of all the relays.
+ * @type Relays
+ */
 module.exports = new Relays();

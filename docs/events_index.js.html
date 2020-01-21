@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Home</title>
+    <title>events/index.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -53,25 +53,48 @@
 
 <div id="main">
     
+    <h1 class="page-title">events/index.js</h1>
+    
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Events module
+ * @module ddmm/events
+ */
 
+const EventEmitter = require('events').EventEmitter;
 
+const path = require('path');
+const fs = require('fs');
 
+const assetsPath = path.join(__dirname, 'assets'); // Where the assets are stored
+const assetNames = fs.readdirSync(assetsPath);     // The assets that are stored
 
+// The assets as an array of [name, module]
+const assetsMap = assetNames.map(name =>
+  [name.replace('.js',''), require(path.join(assetsPath, name))]
+);
 
+/**
+ * Binds a list of event handlers to an event emitter.
+ * @param {EventEmitter} eventEmitter The event emitter to bind the handlers to
+ */
+module.exports.bind = function(eventEmitter) {
 
+  // import.events(eventEmitter); just automatically bind the event
 
-
-
-    
-
-
-
+  assetsMap.forEach(asset => {
+    eventEmitter.addListener(asset[0], asset[1]);
+  });
+};</code></pre>
+        </article>
+    </section>
 
 
 

@@ -1,0 +1,128 @@
+
+/*Sidebar color*/
+nav {
+  background-color: #1C1C1C;
+}
+
+/*Title text*/
+h1.page-title {
+  color: #CBBDFF;
+}
+
+/*Line under title*/
+h1.page-title::after {
+  background: linear-gradient(to right, #7A57FF, rgba(0,0,0,0));
+  height: 10px;
+  left: -10px;
+  bottom: 7px;
+}
+
+/*Home text*/
+nav > h2 > a {
+  color: #CBBDFF !important;
+}
+
+/*Section text*/
+nav h2, nav h3, nav h3 a {
+  color: #A28AFF !important;
+}
+
+/*Subsection text*/
+.sidebar-list-div > ul > li > a {
+  color: #D1CAE5;
+}
+
+/*Sub-subsection text*/
+.sidebar-list-div ul ul a {
+  color: #B3A7D3;
+}
+
+/*Top bar color / text color*/
+body {
+  background-color: #171717;
+  color: #D1CAE5;
+}
+
+/*Main part*/
+section {
+  background-color: #222222;
+  padding: 0 20px 40px;
+}
+
+/*Section subsection title*/
+.subsection-title {
+  color: #D1CAE5;
+  border-bottom: 1px solid #B3A7D3;
+}
+
+/*Parameters name*/
+.method-member-container strong {
+  color: #A28AFF;
+}
+
+.params td {
+  border-top: 1px solid #B3A7D3;
+}
+
+.name code {
+  color: #5F479F;
+}
+
+code {
+  background-color: #EDEAF4;
+}
+
+.params thead tr {
+  background-color: #39257C;
+  color: #D1CAE5;
+}
+
+.details {
+  color: inherit;
+  border-left-color: #7A57FF;
+  background-color: #1C1C1C;
+  border-radius: 5px;
+}
+
+.name {
+  color: #7A57FF;
+}
+
+.type-signature {
+  color: #A28AFF;
+}
+
+.prettyprint, .prettyprint code {
+  background-color: #1C1C1C;
+}
+
+.prettyprint.linenums li {
+  border-left-color: #7A57FF;
+}
+
+.code-lang-name {
+  color: #A28AFF;
+}
+
+h2 {
+  color: #D1CAE5;
+}
+
+h2::after {
+  background: linear-gradient(to right, #7A57FF, rgba(0,0,0,0)) !important;
+  height: 10px !important;
+  width: 200% !important;
+  left: -5px;
+}
+
+.ancestors, .ancestors a {
+  color: #B3A7D3 !important;
+}
+
+hr {
+  border-color: #B3A7D3;
+}
+
+a, a:active {
+  color: #663DFF;
+}

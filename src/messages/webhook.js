@@ -1,5 +1,38 @@
-const ddmm = require('ddmm');
+/**
+ * Webhooks module, used for constructing and sending messages using webhooks
+ * @module ddmm/messages/webhook
+ */
 
+const ddmm = require('ddmm');
+const TextChannel = require('discord.js').TextChannel;
+
+/**
+ * @callback WebhookCallback
+ * @param {Message} message The message that was sent
+ */
+
+/**
+ * Creates or uses a webhook to send a message to a channel
+ * @param {TextChannel} channel The channel to send the message to
+ * @param {Object} content The content of the message
+ * @param {WebhookCallback} callback The function to be called after the message is sent
+ * @example
+const webhook = require('messages/webhook');
+
+let message = {
+  options: {
+    username: 'User',
+    embeds: [{
+      title: 'Embed',
+      description: 'This is a sample embed'
+    }]
+  }
+};
+
+webhook(channel, message, function() {
+  console.log('the message was sent!');
+});
+ */
 module.exports = function(channel, content, callback) {
   let webhook;
 

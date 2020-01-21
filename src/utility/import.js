@@ -1,3 +1,8 @@
+/**
+ * Import module
+ * @module ddmm/utility/import
+ */
+
 const path = require('path');
 const fs = require('fs');
 
@@ -7,6 +12,10 @@ const getModules = function() {
   return fs.readdirSync(importsPath);
 };
 
+/**
+ * Imports commands from packages into a map.
+ * @param {Map} map The map to import commands into
+ */
 module.exports.commands = function(map) {
   let packages = getPackages();
 
@@ -31,6 +40,10 @@ module.exports.commands = function(map) {
   });
 };
 
+/**
+ * Imports message templates from packages into a map.
+ * @param {Map} map The map to import message templates into
+ */
 module.exports.messages = function(map) {
  let packages = getPackages();
 
@@ -55,6 +68,7 @@ module.exports.messages = function(map) {
   });
 };
 
+// NTS: Either remove this or use it at some point
 module.exports.events = function() {
 
 };

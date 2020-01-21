@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Home</title>
+    <title>Relay</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -53,15 +53,192 @@
 
 <div id="main">
     
+    <h1 class="page-title">Relay</h1>
+    
 
     
 
 
 
+
+<section>
+
+
+<header>
+    
+        
+        <h2>
+        
+            <span class="ancestors"><a href="module-ddmm_relays.html">ddmm/relays</a>~</span>
+        
+        Relay
+        
+        </h2>
+        
+        
+            <div class="class-description"><p>The relay that connects a user's DMs to a guild channel.</p></div>
+            <hr/>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Relay"><span class="type-signature"></span>new Relay<span class="signature">(user, guildChannel)</span><span class="type-signature"></span></h4>
+
     
 
 
 
+<div class="description">
+    <p>Constructs a relay binding a user's DMs to a guildChannel.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">User</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The user to construct the relay for</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>guildChannel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">GuildChannel</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The channel to bind the relay to</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="relays_index.js.html">relays/index.js</a>, <a href="relays_index.js.html#line35">line 35</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -69,9 +246,352 @@
 
 
     
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="channel"><span class="type-signature"></span>channel<span class="type-signature"></span></h4>
 
 
 
+
+<div class="description">
+    <p>The guild channel.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="relays_index.js.html">relays/index.js</a>, <a href="relays_index.js.html#line42">line 42</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="channelId"><span class="type-signature"></span>channelId<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The guild channel's id.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="relays_index.js.html">relays/index.js</a>, <a href="relays_index.js.html#line44">line 44</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="dms"><span class="type-signature"></span>dms<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The user's dm channel.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="relays_index.js.html">relays/index.js</a>, <a href="relays_index.js.html#line47">line 47</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="user"><span class="type-signature"></span>user<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The user.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="relays_index.js.html">relays/index.js</a>, <a href="relays_index.js.html#line37">line 37</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="userId"><span class="type-signature"></span>userId<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The user's id.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="relays_index.js.html">relays/index.js</a>, <a href="relays_index.js.html#line39">line 39</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

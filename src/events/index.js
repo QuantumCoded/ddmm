@@ -1,3 +1,10 @@
+/**
+ * Events module
+ * @module ddmm/events
+ */
+
+const EventEmitter = require('events').EventEmitter;
+
 const path = require('path');
 const fs = require('fs');
 
@@ -9,7 +16,10 @@ const assetsMap = assetNames.map(name =>
   [name.replace('.js',''), require(path.join(assetsPath, name))]
 );
 
-// Binds a list of event handlers to an event emitter
+/**
+ * Binds a list of event handlers to an event emitter.
+ * @param {EventEmitter} eventEmitter The event emitter to bind the handlers to
+ */
 module.exports.bind = function(eventEmitter) {
 
   // import.events(eventEmitter); just automatically bind the event

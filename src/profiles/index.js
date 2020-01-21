@@ -1,3 +1,8 @@
+/**
+ * Profiles module
+ * @module ddmm/profiles
+ */
+
 const ddmm = require('ddmm');
 
 const fs = require('fs'); // Require fs to access files on the local machine
@@ -6,34 +11,58 @@ const path = require('path'); // Require the path module to reference the profil
 const profilesPath = path.join(__dirname, 'users'); // ./users
 // NTS: Later this should be a sqlite3 database!
 
-// The class of a user's profile
+/**
+ * The class of a user's profile
+ */ 
 class Profile {
+
+  /**
+   * Creates a profile for a user.
+   * @param {string} name The name of the user's profile
+   */
   constructor(name) {
     this.path = path.join(profilesPath, name); // Save the user's file path
     this.object = JSON.parse(fs.readFileSync(this.path, 'utf8')); // Parse the user object
   }
 
-  // Get a property from the user's object
+  /**
+   * Gets a property from the user's profile.
+   * @param {string} name The name of the property to get
+   * @returns {any} The value of the profile's property
+   */
   getProperty(name) {
     return this.object[name]; 
   }
 
-  // Set a property of the user's object
+  /**
+   * Sets a property of the user's profile.
+   * @param {string} name The name of the property to set
+   * @param {any} value The value to set the property to
+   */
   setProperty(name, value) {
     this.object[name] = value;
     fs.writeFileSync(this.path, JSON.stringify(this.object, true, 2));
   }
 
-  // Delete a property from the user
+  /**
+   * Removes a property form a user's profile.
+   * @param {string} name The name of the property to remove
+   */
   delProperty(name) {
     delete this.object[name];
     fs.writeFileSync(this.path, JSON.stringify(this.object, true, 2));
   }
 }
 
-// The map containing all the profiles with some extra functionality for modifying them
+/**
+ * The map containing all the profiles with some extra functionality for modifying them.
+ * @extends Map
+ */
 class Profiles extends Map {
-  // Validate and store a profile into the profiles map
+  /**
+   * The method for validating and storing a profile into the profiles map.
+   * @param {string} name The name of the user's profile
+   */
   _initializeProfile(name) {
     let client = ddmm.getClient();
   
@@ -51,7 +80,9 @@ class Profiles extends Map {
     }
   };
 
-  // Initialize all the profiles in the profiles directory
+  /**
+   * Initializes all the profiles in the profiles directory.
+   */
   initialize() {
     ddmm.logger.verbose('Initializing user profiles...');
 
@@ -60,7 +91,11 @@ class Profiles extends Map {
     ddmm.logger.verbose('Finished!');
   };
 
-  // Create a profile for a user with custom settings
+  /**
+   * Create a profile for a user with custom settings.
+   * @param {string} id The id of the user to create the profile for
+   * @param {Object} object The initial value of the user's profile
+   */
   createProfile(id, object) {
     let fileName = id + '.json'
     let filePath = path.join(profilesPath, fileName);
@@ -69,4 +104,8 @@ class Profiles extends Map {
   };
 }
 
+/**
+ * A map of all the user's profiles
+ * @type Profiles
+ */
 module.exports = new Profiles();
