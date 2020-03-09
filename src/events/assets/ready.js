@@ -37,10 +37,10 @@ module.exports = function() {
       promises.push(guild.createChannel('dms', {type: 'category'}));                 // Create a dms category
 
       // Add the custom emojis
-      promises.push(guild.createEmoji('../../img/xbutton.png', 'xbutton'));               // Create the emoji for the x button
-      promises.push(guild.createEmoji('../../img/circlebutton.png', 'circlebutton'));     // Create the emoji for the circle button
-      promises.push(guild.createEmoji('../../img/squarebutton.png', 'squarebutton'));     // Create the emoji for the square button
-      promises.push(guild.createEmoji('../../img/trianglebutton.png', 'trianglebutton')); // Create the emoji for the triangle button
+      promises.push(guild.createEmoji(path.join(__dirname, '../../img/xbutton.png'), 'xbutton'));               // Create the emoji for the x button
+      promises.push(guild.createEmoji(path.join(__dirname, '../../img/circlebutton.png'), 'circlebutton'));     // Create the emoji for the circle button
+      promises.push(guild.createEmoji(path.join(__dirname, '../../img/squarebutton.png'), 'squarebutton'));     // Create the emoji for the square button
+      promises.push(guild.createEmoji(path.join(__dirname, '../../img/trianglebutton.png'), 'trianglebutton')); // Create the emoji for the triangle button
 
       Promise.all(promises).then(() => {
         ddmm.logger.info('Guild is formatted');
