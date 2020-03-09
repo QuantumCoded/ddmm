@@ -76,8 +76,8 @@ class Relays extends Map {
     } else {
       ddmm.logger.warn(`Invalid link {${userId}:${channelId}} removing entry (This should be safe to ignore)`);
   
-      relays.delete(userId);
-      relays.delete(channelId);
+      this.delete(userId);
+      this.delete(channelId);
   
       delete links[userId];
       fs.writeFileSync(linksPath, JSON.stringify(links, true, 2));
@@ -147,8 +147,8 @@ class Relays extends Map {
    * @param {Relay} relay The relay to remove
    */
   deleteRelay = function(relay) {
-    if (relays.has(relay.userId)) relays.delete(relay.userId);
-    if (relays.has(relay.channelId)) relays.delete(relay.channelId);
+    if (this.has(relay.userId)) this.delete(relay.userId);
+    if (this.has(relay.channelId)) this.delete(relay.channelId);
 
     delete links[relay.userId];
     fs.writeFileSync(linksPath, JSON.stringify(links, true, 2));
