@@ -16,8 +16,8 @@ module.exports = function(message) {
   // Get the user from relays
   let user = ddmm.relays.get(message.channel.id).user;
 
-  // If the name is more than 0 characters, rename the user, otherwise alert the user that the rename failed
-  if (name.length > 0) {
+  // If the name is more than 0 characters, (and less that 80) rename the user, otherwise alert the user that the rename failed
+  if (name.length > 0 && name.length < 80) {
     // Rename the channel
     message.channel.setName(name)
       .catch(ddmm.logger.error);
@@ -29,7 +29,7 @@ module.exports = function(message) {
     ddmm.messages.send(message.channel, 'notification', `Renamed ${user.username} to ${name}!`);
   } else {
     // Alert the user that the rename failed
-    ddmm.messages.send(message.channel, 'notification', `Failed to rename, no name provided.`);
+    ddmm.messages.send(message.channel, 'notification', `Failed to rename, name provided is invalid.`);
   }
 
   ddmm.logger.debug(`Renaming ${user.username} to ${name}`);
