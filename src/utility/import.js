@@ -17,7 +17,7 @@ const getModules = function() {
  * @param {Map} map The map to import commands into
  */
 module.exports.commands = function(map) {
-  let packages = getPackages();
+  let packages = getModules();
 
   packages.forEach(pkg => {
     if (pkg === '.gitignore') return; // Ignore the .gitignore
@@ -45,7 +45,7 @@ module.exports.commands = function(map) {
  * @param {Map} map The map to import message templates into
  */
 module.exports.messages = function(map) {
- let packages = getPackages();
+ let packages = getModules();
 
   packages.forEach(pkg => {
     if (pkg === '.gitignore') return; // Ignore the .gitignore
