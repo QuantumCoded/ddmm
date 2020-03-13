@@ -11,13 +11,13 @@ module.exports = function(message) {
   if (!client.guilds.has(guildId)) return;
 
   // Create a flag for important characteristics or each message
-  let isBotMessage = message.author.bot;                                                        // Was the message sent by a bot account
-  let isChannelRelayable = ddmm.relays.has(message.channel.id);                                 // Was the message sent in a relayable guild channel
-  let isInternal = message.guild && message.guild.id === guildId;                               // Was the message sent in the guild
-  let isIncoming = message.channel.type === 'dm' && client.user.id != message.author.id;        // Was the message sent in a dm channel by another user
-  let isCommand = !isBotMessage && isInternal && message.content.startsWith(operators.command); // Was the message internal and using the command operator
-  let isNote = !isBotMessage && isInternal && message.content.startsWith(operators.note);       // Was the message internal and using the note operator
-  let isRelayable = !isBotMessage && !(isCommand || isNote) && isChannelRelayable;              // Was the message in a relayabe channel and a valid relayable message
+  let isBotMessage = message.author.bot;                                                                  // Was the message sent by a bot account
+  let isChannelRelayable = ddmm.relays.has(message.channel.id);                                           // Was the message sent in a relayable guild channel
+  let isInternal = message.guild && message.guild.id === guildId;                                         // Was the message sent in the guild
+  let isIncoming = message.channel.type === 'dm' && client.user.id != message.author.id && !isBotMessage; // Was the message sent in a dm channel by another user
+  let isCommand = !isBotMessage && isInternal && message.content.startsWith(operators.command);           // Was the message internal and using the command operator
+  let isNote = !isBotMessage && isInternal && message.content.startsWith(operators.note);                 // Was the message internal and using the note operator
+  let isRelayable = !isBotMessage && !(isCommand || isNote) && isChannelRelayable;                        // Was the message in a relayabe channel and a valid relayable message
 
   // A code that represents the state of all the conditions above
   let typeCode = (isChannelRelayable << 5) +
