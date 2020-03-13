@@ -135,3 +135,11 @@ Version 1.4
   Profiles now exports a class of Profiles that extends a Map allowing for all the old calls as well as those of a Map
   Moved everything all the ways around and created a src directory a misc directory a processes directory
   Documented most of the things, just enough for people to know what to make calls to
+
+Version 1.4.1
+  Minor bugfix - deleting a relay no longer uses an invalid call
+  Minor bugfix - changing a word jsdoc doesn't like
+  Minor bugfix - fixed the path to images
+  Minor bugfix - added missing max length restriction with rename
+  Making rename display characters over or under
+  Ignoring incoming messages from bots
