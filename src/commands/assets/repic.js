@@ -14,17 +14,25 @@ module.exports = function(message) {
   
   // If the url exists then change the users profile picture, otherwise alert the user
   if (url.length > 0) {
-    // If the user has a profile then change their profile-picture property
-    if (ddmm.profiles.has(relay.user.id)) {
-      ddmm.profiles.get(relay.user.id).setProperty('profile-picture', url);
+    let profile = ddmm.profiles.get(relay.userId); // Get the user's profile
+
+    // Error out if there is no profile for the user
+    if (!profile) {
+      ddmm.logger.error('Attempting to change picture of user', relay.user.username, relay.userId, 'failed. (no profile)');
+      ddmm.messages.send(message.channel, 'notification', `There was an error while changing the picture!`);
+
+      return;
     }
+
+    // Change the user's profile-picture property
+    profile.setProperty('profile-picture', url);
     
     // Alert the user that the user's image updated successfully
     ddmm.logger.debug(`Reimaging ${relay.user.username} with ${url}`);
-    ddmm.messages.send(message.channel, 'notification', `Successfully changed the picture for ${relay.displayName}!`);
+    ddmm.messages.send(message.channel, 'notification', `Successfully changed the picture for ${profile.getProperty('name')}!`);
   } else {
     // Alert the user that there was an error
-    ddmm.messages.send(message.channel, 'notification', `There was an error while changing the picture!`)
+    ddmm.messages.send(message.channel, 'notification', `There was an error while changing the picture!`);
   }
 
   // NTS Include the ability to show a photo in the notification too

@@ -22,14 +22,29 @@ module.exports = function(message) {
     message.channel.setName(name)
       .catch(ddmm.logger.error);
 
-    // Rename the user's profile
-    ddmm.profiles.get(user.id).setProperty('name', name);
+    // Get the user's profile
+    let profile = ddmm.profiles.get(user.id);
+    
+    // Error out if the user has no profile
+    if (!profile) {
+      ddmm.logger.error('Attempting to change name of user', relay.user.username, relay.userId, 'failed. (no profile)');
+      ddmm.messages.send(message.channel, 'notification', `There was an error while changing the name!`);
+
+      return;
+    }
+
+    profile.setProperty('name', name);
 
     // Alert the user that the rename completed
     ddmm.messages.send(message.channel, 'notification', `Renamed ${user.username} to ${name}!`);
   } else {
+    let reason;
+
+    if (name.length === 0) reason = 'name must be at least 1 character, 0 were provided';
+    if (name.length >= 80) reason = `name must be shorter than 80 characters, ${name.length} were provided`;
+
     // Alert the user that the rename failed
-    ddmm.messages.send(message.channel, 'notification', `Failed to rename, name provided is invalid.`);
+    ddmm.messages.send(message.channel, 'notification', `Failed to rename, name is invalid. (${reason || 'Fatal Error'})`);
   }
 
   ddmm.logger.debug(`Renaming ${user.username} to ${name}`);
